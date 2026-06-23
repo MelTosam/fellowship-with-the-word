@@ -1,0 +1,19 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Devotionals</h1>
+    <p>Click on any devotional to read the full teaching.</p>
+
+    {% for devotional in devotionals %}
+        <div class='devotional-card' style='padding: 15px 20px;'>
+            <div style='display: flex; justify-content: space-between; align-items: center;'>
+                <div>
+                    <h2 style='margin-bottom: 5px;'>{{ devotional.title }}</h2>
+                    <p style='color: #999; font-size: 13px; margin: 0;'>{{ devotional.date }}</p>
+                </div>
+                <a href='/devotionals/{{ devotional.id }}'
+                    style='color: #9B8EC4; font-weight: bold; text-decoration: none; font-size: 20px;'>→</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,211 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, serif;
+}
+
+body {
+    background-color: #F8F7FF;
+    color: #2C2C2C;
+}
+
+nav {
+    background-color: #9B8EC4;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-brand {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-tagline {
+    color: #F0EEF8;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #C8DBC9;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    color: #9B8EC4;
+    font-size: 26px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #7C9A7E;
+}
+
+h2 {
+    color: #7C9A7E;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: #444;
+    font-size: 16px;
+}
+
+.devotional-card {
+    background: white;
+    border-left: 6px solid #7C9A7E;
+    border-top: 3px solid #9B8EC4;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(155, 142, 196, 0.15);
+}
+
+.verse {
+    color: #7C9A7E;
+    font-style: italic;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+a {
+    color: #7C9A7E;
+}
+
+a:hover {
+    color: #9B8EC4;
+}
+
+footer {
+    background-color: #7C9A7E;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-size: 14px;
+    margin-top: 60px;
+}
+
+.bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 12px 15px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-brand {
+        font-size: 18px;
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.9;
+    }
+
+    .devotional-card {
+        padding: 15px;
+    }
+
+    footer {
+        display: none;
+    }
+
+    .bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background-color: white;
+        border-top: 2px solid #e0e0e0;
+        z-index: 1000;
+        padding: 6px 0 10px 0;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #888;
+        flex: 1;
+        padding: 4px 0;
+        min-width: 0;
+    }
+
+    .bottom-nav-item:hover {
+        color: #9B8EC4;
+    }
+
+    .bottom-nav-icon {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 4px;
+        fill: #888;
+    }
+
+    .bottom-nav-item:hover .bottom-nav-icon {
+        fill: #9B8EC4;
+    }
+
+    .bottom-nav-label {
+        font-size: 10px;
+        font-family: Arial, sans-serif;
+        color: #888;
+        text-align: center;
+        white-space: nowrap;
+    }
+}

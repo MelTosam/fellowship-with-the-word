@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Add Devotional</h1>
+
+    {% if message %}
+        <div class='devotional-card'>
+            <p style='color: #7C9A7E; font-weight: bold;'>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <div class='devotional-card'>
+        <form method='POST'>
+            <p><strong>Title</strong></p>
+            <input type='text' name='title' placeholder='Enter devotional title'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <p><strong>Verse</strong></p>
+            <input type='text' name='verse' placeholder='e.g. Romans 5:9'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <p><strong>Explanation</strong></p>
+            <textarea name='explanation' rows='10' placeholder='Enter full devotional explanation here...'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'></textarea>
+
+            <p><strong>Date (DD-MM-YYYY)</strong></p>
+            <input type='text' name='date' placeholder='e.g. 20-06-2026'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <button type='submit'
+                style='background-color: #9B8EC4; color: white; padding: 12px 30px;
+                border: none; border-radius: 4px; font-size: 16px; cursor: pointer;'>
+                Save Devotional
+            </button>
+        </form>
+    </div>
+{% endblock %}

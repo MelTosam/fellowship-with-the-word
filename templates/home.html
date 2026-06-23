@@ -1,0 +1,14 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Today's Devotional</h1>
+    {% if devotional %}
+        <div class='devotional-card'>
+            <h2>{{ devotional.title }}</h2>
+            <p class='verse'>{{ devotional.verse }}</p>
+            <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
+        </div>
+    {% else %}
+        <p>No devotional available for today. Check back tomorrow.</p>
+    {% endif %}
+{% endblock %}

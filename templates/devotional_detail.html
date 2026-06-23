@@ -1,0 +1,13 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <a href='/devotionals' style='color: #7C9A7E; text-decoration: none;'>← Back to Devotionals</a>
+
+    <div class='devotional-card' style='margin-top: 20px;'>
+        <h1>{{ devotional.title }}</h1>
+        <p class='verse'>{{ devotional.verse }}</p>
+        <p style='color: #999; font-size: 13px;'>{{ devotional.date }}</p>
+        <hr style='border: none; border-top: 2px solid #f0eef8; margin: 15px 0;'>
+        <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
+    </div>
+{% endblock %}
