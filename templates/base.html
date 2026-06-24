@@ -21,7 +21,14 @@
             <a href='/give'>Give</a>
             <a href='/profile'>Profile</a>
         </div>
+        <button class='hamburger' onclick='toggleMenu()'>&#9776;</button>
     </nav>
+
+    <div class='mobile-menu' id='mobileMenu'>
+        <a href='/about'>About Us</a>
+        <a href='/contact'>Contact</a>
+        <a href='/give'>Give</a>
+    </div>
 
     <div class='container'>
         {% block content %}
@@ -64,5 +71,16 @@
     <footer>
         <p>Fellowship With The Word &copy; 2026</p>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobileMenu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
