@@ -65,7 +65,7 @@ nav {
 
 .mobile-menu {
     display: none;
-    background-color: #7C9A7E;
+    background-color: #4A7C59;
     padding: 10px 0;
 }
 
@@ -83,32 +83,35 @@ nav {
 }
 
 .hero {
-    background: linear-gradient(135deg, #9B8EC4 0%, #7C9A7E 100%);
+    background: linear-gradient(135deg, #6B5B9E 0%, #4A7C59 100%);
     padding: 50px 30px;
     text-align: center;
     color: white;
 }
 
+.greeting {
+    font-size: 18px;
+    font-style: italic;
+    color: #E8F5E9;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
 .hero-title {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: white;
     border: none;
     padding: 0;
+    line-height: 1.4;
 }
 
 .hero-tagline {
-    font-size: 16px;
+    font-size: 15px;
+    color: #E0D7F5;
+    margin-bottom: 0;
     font-style: italic;
-    color: #F0EEF8;
-    margin-bottom: 5px;
-}
-
-.hero-verse {
-    font-size: 14px;
-    color: #C8DBC9;
-    margin: 0;
 }
 
 .today-section {
@@ -122,7 +125,7 @@ nav {
     font-size: 20px;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #7C9A7E;
+    border-bottom: 3px solid #4A7C59;
 }
 
 .container {
@@ -136,11 +139,11 @@ h1 {
     font-size: 26px;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 3px solid #7C9A7E;
+    border-bottom: 3px solid #4A7C59;
 }
 
 h2 {
-    color: #7C9A7E;
+    color: #4A7C59;
     font-size: 18px;
     margin-bottom: 10px;
 }
@@ -154,7 +157,7 @@ p {
 
 .devotional-card {
     background: white;
-    border-left: 6px solid #7C9A7E;
+    border-left: 6px solid #4A7C59;
     border-top: 3px solid #9B8EC4;
     padding: 20px;
     margin-bottom: 20px;
@@ -163,7 +166,7 @@ p {
 }
 
 .verse {
-    color: #7C9A7E;
+    color: #4A7C59;
     font-style: italic;
     font-size: 16px;
     margin-bottom: 10px;
@@ -171,7 +174,7 @@ p {
 }
 
 a {
-    color: #7C9A7E;
+    color: #4A7C59;
 }
 
 a:hover {
@@ -179,7 +182,7 @@ a:hover {
 }
 
 footer {
-    background-color: #7C9A7E;
+    background-color: #4A7C59;
     text-align: center;
     padding: 20px;
     color: white;
@@ -217,7 +220,11 @@ footer {
     }
 
     .hero-title {
-        font-size: 24px;
+        font-size: 20px;
+    }
+
+    .greeting {
+        font-size: 16px;
     }
 
     .hero-tagline {

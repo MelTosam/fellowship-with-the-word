@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class='hero'>
-        <h1 class='hero-title'>Fellowship With The Word</h1>
-        <p class='hero-tagline'>Networking the world with the light of life</p>
-        <p class='hero-verse'>John 1:4</p>
+        <p class='greeting' id='greeting'></p>
+        <h1 class='hero-title'>The Word of God is food for your soul.</h1>
+        <p class='hero-tagline'>Are you ready for today's devotional?</p>
     </div>
 
     <div class='today-section'>
@@ -22,4 +22,20 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+        function setGreeting() {
+            var hour = new Date().getHours();
+            var greeting = '';
+            if (hour < 12) {
+                greeting = 'Good morning';
+            } else if (hour < 17) {
+                greeting = 'Good afternoon';
+            } else {
+                greeting = 'Good evening';
+            }
+            document.getElementById('greeting').textContent = greeting;
+        }
+        setGreeting();
+    </script>
 {% endblock %}
