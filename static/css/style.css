@@ -16,8 +16,11 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     gap: 10px;
+}
+
+.nav-center {
+    flex: 1;
 }
 
 .nav-brand {
@@ -57,6 +60,7 @@ nav {
     color: white;
     font-size: 28px;
     cursor: pointer;
+    padding: 0;
 }
 
 .mobile-menu {
@@ -154,7 +158,11 @@ footer {
     }
 
     .nav-brand {
-        font-size: 18px;
+        font-size: 16px;
+    }
+
+    .nav-tagline {
+        font-size: 11px;
     }
 
     .hamburger {
