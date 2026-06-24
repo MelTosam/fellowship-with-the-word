@@ -1,14 +1,25 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
-    <h1>Today's Devotional</h1>
-    {% if devotional %}
-        <div class='devotional-card'>
-            <h2>{{ devotional.title }}</h2>
-            <p class='verse'>{{ devotional.verse }}</p>
-            <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
-        </div>
-    {% else %}
-        <p>No devotional available for today. Check back tomorrow.</p>
-    {% endif %}
+    <div class='hero'>
+        <h1 class='hero-title'>Fellowship With The Word</h1>
+        <p class='hero-tagline'>Networking the world with the light of life</p>
+        <p class='hero-verse'>John 1:4</p>
+    </div>
+
+    <div class='today-section'>
+        <h2 class='section-title'>Today's Devotional</h2>
+        {% if devotional %}
+            <div class='devotional-card'>
+                <h2>{{ devotional.title }}</h2>
+                <p class='verse'>{{ devotional.verse }}</p>
+                <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
+            </div>
+        {% else %}
+            <div class='devotional-card'>
+                <p>No devotional for today. Check back tomorrow or browse our archive.</p>
+                <a href='/devotionals' style='color: #9B8EC4; font-weight: bold;'>Browse All Devotionals →</a>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
