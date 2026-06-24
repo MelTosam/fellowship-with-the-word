@@ -1,17 +1,19 @@
-﻿* {
+﻿@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Georgia, serif;
 }
 
 body {
     background-color: #F8F7FF;
     color: #2C2C2C;
+    font-family: 'Inter', sans-serif;
 }
 
 nav {
-    background-color: #9B8EC4;
+    background-color: #7B6FA0;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
@@ -25,28 +27,33 @@ nav {
 
 .nav-brand {
     color: white;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 600;
     text-decoration: none;
+    font-family: 'Lora', serif;
+    letter-spacing: 0.5px;
 }
 
 .nav-tagline {
-    color: #F0EEF8;
-    font-size: 12px;
+    color: #E8E4F3;
+    font-size: 11px;
     font-style: italic;
+    font-family: 'Lora', serif;
+    margin-top: 2px;
 }
 
 .nav-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
 }
 
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .nav-links a:hover {
@@ -58,14 +65,14 @@ nav {
     background: none;
     border: none;
     color: white;
-    font-size: 28px;
+    font-size: 26px;
     cursor: pointer;
     padding: 0;
 }
 
 .mobile-menu {
     display: none;
-    background-color: #4A7C59;
+    background-color: #3D6B50;
     padding: 10px 0;
 }
 
@@ -73,121 +80,138 @@ nav {
     display: block;
     color: white;
     text-decoration: none;
-    padding: 12px 20px;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 14px 20px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
 .mobile-menu a:hover {
-    background-color: #9B8EC4;
+    background-color: #7B6FA0;
 }
 
 .hero {
-    background: linear-gradient(135deg, #6B5B9E 0%, #4A7C59 100%);
-    padding: 50px 30px;
+    background: linear-gradient(160deg, #2D2640 0%, #3D6B50 100%);
+    padding: 55px 30px;
     text-align: center;
     color: white;
+    position: relative;
 }
 
 .greeting {
-    font-size: 18px;
-    font-style: italic;
-    color: #E8F5E9;
-    margin-bottom: 15px;
-    font-weight: normal;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: #C8DBC9;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .hero-title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 12px;
+    font-size: 28px;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    margin-bottom: 14px;
     color: white;
     border: none;
     padding: 0;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .hero-tagline {
     font-size: 15px;
-    color: #E0D7F5;
+    color: #B8A9D9;
     margin-bottom: 0;
     font-style: italic;
+    font-family: 'Lora', serif;
 }
 
 .today-section {
     max-width: 800px;
-    margin: 30px auto;
+    margin: 35px auto;
     padding: 0 20px;
 }
 
 .section-title {
-    color: #9B8EC4;
-    font-size: 20px;
+    color: #7B6FA0;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 3px solid #4A7C59;
+    border-bottom: 2px solid #3D6B50;
 }
 
 .container {
     max-width: 800px;
-    margin: 30px auto;
+    margin: 35px auto;
     padding: 0 20px;
 }
 
 h1 {
-    color: #9B8EC4;
-    font-size: 26px;
+    color: #7B6FA0;
+    font-size: 24px;
+    font-family: 'Lora', serif;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 3px solid #4A7C59;
+    border-bottom: 2px solid #3D6B50;
 }
 
 h2 {
-    color: #4A7C59;
+    color: #3D6B50;
     font-size: 18px;
+    font-family: 'Lora', serif;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 p {
-    line-height: 1.8;
+    line-height: 1.85;
     margin-bottom: 15px;
     color: #444;
-    font-size: 16px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
 }
 
 .devotional-card {
     background: white;
-    border-left: 6px solid #4A7C59;
-    border-top: 3px solid #9B8EC4;
-    padding: 20px;
+    border-left: 5px solid #3D6B50;
+    border-top: 3px solid #7B6FA0;
+    padding: 25px;
     margin-bottom: 20px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(155, 142, 196, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(123, 111, 160, 0.12);
 }
 
 .verse {
-    color: #4A7C59;
+    color: #3D6B50;
     font-style: italic;
-    font-size: 16px;
-    margin-bottom: 10px;
-    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-family: 'Lora', serif;
 }
 
 a {
-    color: #4A7C59;
+    color: #3D6B50;
 }
 
 a:hover {
-    color: #9B8EC4;
+    color: #7B6FA0;
 }
 
 footer {
-    background-color: #4A7C59;
+    background-color: #2D2640;
     text-align: center;
-    padding: 20px;
-    color: white;
-    font-size: 14px;
+    padding: 25px;
+    color: #B8A9D9;
+    font-size: 13px;
     margin-top: 60px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .bottom-nav {
@@ -204,11 +228,7 @@ footer {
     }
 
     .nav-brand {
-        font-size: 16px;
-    }
-
-    .nav-tagline {
-        font-size: 11px;
+        font-size: 15px;
     }
 
     .hamburger {
@@ -216,19 +236,15 @@ footer {
     }
 
     .hero {
-        padding: 35px 20px;
+        padding: 40px 20px;
     }
 
     .hero-title {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .greeting {
-        font-size: 16px;
-    }
-
-    .hero-tagline {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     body {
@@ -246,20 +262,20 @@ footer {
     }
 
     h1 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     h2 {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     p {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1.9;
     }
 
     .devotional-card {
-        padding: 15px;
+        padding: 18px;
     }
 
     footer {
@@ -274,7 +290,7 @@ footer {
         right: 0;
         width: 100%;
         background-color: white;
-        border-top: 2px solid #e0e0e0;
+        border-top: 1px solid #e0e0e0;
         z-index: 1000;
         padding: 6px 0 10px 0;
         justify-content: space-around;
@@ -287,26 +303,26 @@ footer {
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        color: #888;
+        color: #999;
         flex: 1;
         padding: 4px 0;
     }
 
     .bottom-nav-item:hover {
-        color: #9B8EC4;
+        color: #7B6FA0;
     }
 
     .bottom-nav-icon {
         width: 24px;
         height: 24px;
         margin-bottom: 4px;
-        fill: #888;
+        fill: #999;
     }
 
     .bottom-nav-label {
         font-size: 10px;
-        font-family: Arial, sans-serif;
-        color: #888;
+        font-family: 'Inter', sans-serif;
+        color: #999;
         text-align: center;
     }
 }
