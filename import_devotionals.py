@@ -1,6 +1,10 @@
-﻿import sqlite3
+﻿import psycopg2
+import os
+from dotenv import load_dotenv
 
-connection = sqlite3.connect('fellowship.db')
+load_dotenv()
+
+connection = psycopg2.connect(os.environ.get('DATABASE_URL'))
 cursor = connection.cursor()
 
 with open('devotionals.txt', 'r') as file:
@@ -9,11 +13,12 @@ with open('devotionals.txt', 'r') as file:
         if line:
             parts = line.split('|')
             cursor.execute(
-                'INSERT INTO devotionals (title, verse, explanation, date) VALUES (?, ?, ?, ?)',
+                'INSERT INTO devotionals (title, verse, explanation, date) VALUES (%s, %s, %s, %s)',
                 (parts[0], parts[1], parts[2], parts[3])
             )
 
 connection.commit()
+cursor.close()
 connection.close()
 
 print('Devotionals imported successfully')

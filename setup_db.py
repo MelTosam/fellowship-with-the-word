@@ -1,11 +1,15 @@
-﻿import sqlite3
+﻿import psycopg2
+import os
+from dotenv import load_dotenv
 
-connection = sqlite3.connect('fellowship.db')
+load_dotenv()
+
+connection = psycopg2.connect(os.environ.get('DATABASE_URL'))
 cursor = connection.cursor()
 
 cursor.execute('''
-    CREATE TABLE devotionals (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+    CREATE TABLE IF NOT EXISTS devotionals (
+        id SERIAL PRIMARY KEY,
         title TEXT,
         verse TEXT,
         explanation TEXT,
@@ -14,6 +18,7 @@ cursor.execute('''
 ''')
 
 connection.commit()
+cursor.close()
 connection.close()
 
 print('Database and table created successfully')
