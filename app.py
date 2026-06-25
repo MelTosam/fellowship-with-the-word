@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory
+﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
 def get_db_connection():
     DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -139,8 +140,28 @@ def bible():
 
     return render_template('bible.html', verse_text=verse_text, verse_reference=verse_reference, error=error)
 
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    error = None
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if password == os.environ.get('ADMIN_PASSWORD'):
+            session['admin'] = True
+            return redirect(url_for('add_devotional'))
+        else:
+            error = 'Incorrect password. Please try again.'
+    return render_template('admin_login.html', error=error)
+
+@app.route('/admin/logout')
+def admin_logout():
+    session.pop('admin', None)
+    return redirect(url_for('home'))
+
 @app.route('/add-devotional', methods=['GET', 'POST'])
 def add_devotional():
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+
     message = None
 
     if request.method == 'POST':
