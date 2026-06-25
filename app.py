@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request
+﻿from flask import Flask, render_template, request, send_from_directory
 import datetime
 import requests
 import os
@@ -8,9 +8,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
 def get_db_connection():
+    DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL and DATABASE_URL.startswith('postgresql'):
         import psycopg2
         conn = psycopg2.connect(DATABASE_URL)
@@ -163,6 +162,10 @@ def add_devotional():
         message = 'Devotional saved successfully.'
 
     return render_template('add_devotional.html', message=message)
+
+@app.route('/static/sw.js')
+def service_worker():
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
