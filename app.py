@@ -118,6 +118,10 @@ def give():
 def profile():
     return render_template('profile.html')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
 @app.route('/bible', methods=['GET', 'POST'])
 def bible():
     verse_text = None
