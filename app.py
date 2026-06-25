@@ -74,7 +74,12 @@ def home():
 @app.route('/devotionals')
 def devotionals_page():
     devotionals = load_devotionals()
-    return render_template('devotionals.html', devotionals=devotionals)
+    keyword = request.args.get('search', '')
+    if keyword:
+        devotionals = [d for d in devotionals if
+                      keyword.lower() in d['title'].lower() or
+                      keyword.lower() in d['explanation'].lower()]
+    return render_template('devotionals.html', devotionals=devotionals, keyword=keyword)
 
 @app.route('/devotionals/<int:devotional_id>')
 def devotional_detail(devotional_id):

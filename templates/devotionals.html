@@ -2,18 +2,42 @@
 
 {% block content %}
     <h1>Devotionals</h1>
-    <p>Click on any devotional to read the full teaching.</p>
 
-    {% for devotional in devotionals %}
-        <div class='devotional-card' style='padding: 15px 20px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-                <div>
-                    <h2 style='margin-bottom: 5px;'>{{ devotional.title }}</h2>
-                    <p style='color: #999; font-size: 13px; margin: 0;'>{{ devotional.date }}</p>
+    <div class='devotional-card' style='padding: 15px 20px;'>
+        <form method='GET' action='/devotionals'>
+            <input type='text' name='search' value='{{ keyword }}' placeholder='Search devotionals...'
+                style='width: 80%; padding: 10px; border: 2px solid #9B8EC4;
+                border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+            <button type='submit'
+                style='background-color: #9B8EC4; color: white; padding: 10px 20px;
+                border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                Search
+            </button>
+        </form>
+        {% if keyword %}
+            <p style='margin-top: 10px; font-size: 13px; color: #999;'>
+                Showing results for "{{ keyword }}" — 
+                <a href='/devotionals' style='color: #9B8EC4;'>Clear search</a>
+            </p>
+        {% endif %}
+    </div>
+
+    {% if devotionals %}
+        {% for devotional in devotionals %}
+            <div class='devotional-card' style='padding: 15px 20px;'>
+                <div style='display: flex; justify-content: space-between; align-items: center;'>
+                    <div>
+                        <h2 style='margin-bottom: 5px;'>{{ devotional.title }}</h2>
+                        <p style='color: #999; font-size: 13px; margin: 0;'>{{ devotional.date }}</p>
+                    </div>
+                    <a href='/devotionals/{{ devotional.id }}'
+                        style='color: #9B8EC4; font-weight: bold; text-decoration: none; font-size: 20px;'>→</a>
                 </div>
-                <a href='/devotionals/{{ devotional.id }}'
-                    style='color: #9B8EC4; font-weight: bold; text-decoration: none; font-size: 20px;'>→</a>
             </div>
+        {% endfor %}
+    {% else %}
+        <div class='devotional-card'>
+            <p>No devotionals found for "{{ keyword }}". Try a different search term.</p>
         </div>
-    {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -16,15 +16,19 @@ devotionals = [
       "date": "23-06-2026"}
       ]
 
-today = "25-06-2026"
-def todays_devotional(devotional, date):
+def devotional_keyword(devotionals, keyword):
+    matching = []
     for devotional in devotionals:
-        if (devotional["date"]) == today:
-           return devotional 
-    return None
+        if keyword.lower() in devotional["title"].lower() or keyword.lower() in devotional["explanation"].lower():
+            matching.append(devotional)
+    return matching  
+      
+result = devotional_keyword(devotionals, "Christ")       
+for devotional in result:
+    print("title:", devotional["title"])
+    print("explanation:", devotional["explanation"])
+    print("---")
 
-result = todays_devotional(devotionals, today)
-print("title:", result["title"])
-print("verse:", result["verse"])
-print("explanation:", result["explanation"])
-print("date:", result["date"])
+
+
+
