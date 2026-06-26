@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Add Sermon</h1>
+
+    {% if message %}
+        <div class='devotional-card'>
+            <p style='color: #3D6B50; font-weight: bold;'>{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <div class='devotional-card'>
+        <form method='POST'>
+            <p><strong>Title</strong></p>
+            <input type='text' name='title' placeholder='Enter sermon title'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <p><strong>Date (DD-MM-YYYY)</strong></p>
+            <input type='text' name='date' placeholder='e.g. 26-06-2026'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <p><strong>Description</strong></p>
+            <textarea name='description' rows='5' placeholder='Enter sermon description...'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'></textarea>
+
+            <p><strong>YouTube Embed URL</strong></p>
+            <input type='text' name='video_url' placeholder='https://www.youtube.com/embed/VIDEO_ID'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 15px;'>
+
+            <button type='submit'
+                style='background-color: #9B8EC4; color: white; padding: 12px 30px;
+                border: none; border-radius: 4px; font-size: 16px; cursor: pointer;'>
+                Save Sermon
+            </button>
+        </form>
+    </div>
+{% endblock %}

@@ -40,19 +40,22 @@ def load_devotionals():
     return devotionals
 
 def load_sermons():
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT id, title, date, description, video_url FROM sermons')
+    rows = cursor.fetchall()
+    conn.close()
+
     sermons = []
-    with open('sermons.txt', 'r') as file:
-        for line in file:
-            line = line.strip()
-            if line:
-                parts = line.split('|')
-                sermon = {
-                    'title': parts[0],
-                    'date': parts[1],
-                    'description': parts[2],
-                    'video_url': parts[3]
-                }
-                sermons.append(sermon)
+    for row in rows:
+        sermon = {
+            'id': row[0],
+            'title': row[1],
+            'date': row[2],
+            'description': row[3],
+            'video_url': row[4]
+        }
+        sermons.append(sermon)
     return sermons
 
 def get_todays_devotional(devotionals):
@@ -105,7 +108,33 @@ def devotional_detail(devotional_id):
 @app.route('/sermons')
 def sermons_page():
     sermons = load_sermons()
-    return render_template('sermons.html', sermons=sermons)
+    keyword = request.args.get('search', '')
+    if keyword:
+        sermons = [s for s in sermons if
+                  keyword.lower() in s['title'].lower() or
+                  keyword.lower() in s['description'].lower()]
+    return render_template('sermons.html', sermons=sermons, keyword=keyword)
+
+@app.route('/sermons/<int:sermon_id>')
+def sermon_detail(sermon_id):
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+    cursor.execute(f'SELECT id, title, date, description, video_url FROM sermons WHERE id = {ph}', (sermon_id,))
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        sermon = {
+            'id': row[0],
+            'title': row[1],
+            'date': row[2],
+            'description': row[3],
+            'video_url': row[4]
+        }
+        return render_template('sermon_detail.html', sermon=sermon)
+    else:
+        return 'Sermon not found', 404
 
 @app.route('/about')
 def about():
@@ -192,6 +221,33 @@ def add_devotional():
         message = 'Devotional saved successfully.'
 
     return render_template('add_devotional.html', message=message)
+
+@app.route('/add-sermon', methods=['GET', 'POST'])
+def add_sermon():
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+
+    message = None
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        date = request.form.get('date')
+        description = request.form.get('description')
+        video_url = request.form.get('video_url')
+
+        conn, db_type = get_db_connection()
+        cursor = conn.cursor()
+        ph = get_placeholder(db_type)
+        cursor.execute(
+            f'INSERT INTO sermons (title, date, description, video_url) VALUES ({ph}, {ph}, {ph}, {ph})',
+            (title, date, description, video_url)
+        )
+        conn.commit()
+        conn.close()
+
+        message = 'Sermon saved successfully.'
+
+    return render_template('add_sermon.html', message=message)
 
 @app.route('/static/sw.js')
 def service_worker():

@@ -1,0 +1,25 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <a href='/sermons' style='color: #7C9A7E; text-decoration: none; font-family: Inter, sans-serif;
+        font-size: 14px;'>← Back to Sermons</a>
+
+    <div style='margin-top: 20px;'>
+        <div style='border-radius: 8px; overflow: hidden; margin-bottom: 20px;'>
+            <iframe width='100%' height='250'
+                src='{{ sermon.video_url }}'
+                frameborder='0'
+                allowfullscreen
+                style='display: block;'>
+            </iframe>
+        </div>
+
+        <div class='devotional-card'>
+            <h1 style='font-size: 22px; margin-bottom: 8px;'>{{ sermon.title }}</h1>
+            <p style='color: #B8A9D9; font-size: 13px; margin-bottom: 15px;
+                font-family: Inter, sans-serif;'>{{ sermon.date }}</p>
+            <hr style='border: none; border-top: 1px solid #f0eef8; margin-bottom: 15px;'>
+            <p style='white-space: pre-wrap;'>{{ sermon.description }}</p>
+        </div>
+    </div>
+{% endblock %}
