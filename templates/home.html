@@ -11,69 +11,138 @@
 
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
-            <div class='devotional-card'>
-                <h2>{{ devotional.title }}</h2>
-                <p class='verse'>{{ devotional.verse }}</p>
-                <p>{{ devotional.explanation[:200] }}...</p>
+            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+                border-radius: 12px; padding: 25px; margin-bottom: 10px;
+                box-shadow: 0 4px 15px rgba(92, 26, 26, 0.4);'>
+                <p style='color: #E8B4A0; font-size: 11px; letter-spacing: 2px;
+                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
+                    Fellowship With The Word
+                </p>
+                <h2 style='color: white; font-family: Lora, Georgia, serif;
+                    font-size: 20px; margin-bottom: 8px; line-height: 1.4;'>
+                    {{ devotional.title }}
+                </h2>
+                <p style='color: #E8B4A0; font-style: italic; font-family: Lora, Georgia, serif;
+                    font-size: 14px; margin-bottom: 12px;'>{{ devotional.verse }}</p>
+                <p style='color: #F5E6E0; font-size: 14px; line-height: 1.8;
+                    font-family: Inter, sans-serif; margin-bottom: 15px;'>
+                    {{ devotional.explanation[:200] }}...
+                </p>
                 <a href='/devotionals/{{ devotional.id }}'
-                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    style='color: white; font-weight: bold; text-decoration: none;
+                    font-family: Inter, sans-serif; font-size: 14px;
+                    border: 1px solid rgba(255,255,255,0.4); padding: 8px 16px;
+                    border-radius: 20px;'>
                     Read full devotional →
                 </a>
             </div>
         {% else %}
-            <div class='devotional-card'>
-                <p>No devotional for today. Check back tomorrow.</p>
-                <a href='/devotionals' style='color: #9B8EC4; font-weight: bold;'>Browse all devotionals →</a>
+            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+                border-radius: 12px; padding: 25px; margin-bottom: 10px;'>
+                <p style='color: #F5E6E0;'>No devotional for today. Check back tomorrow.</p>
+                <a href='/devotionals' style='color: #E8B4A0; font-weight: bold;'>Browse all devotionals →</a>
             </div>
         {% endif %}
 
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
-            <h2 class='section-title' style='margin: 0;'>Previous Devotional</h2>
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
+            <h2 class='section-title' style='margin: 0;'>Devotionals</h2>
             <a href='/devotionals' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all →</a>
         </div>
         {% if yesterday %}
-            <div class='devotional-card' style='margin-top: 10px;'>
-                <h2>{{ yesterday.title }}</h2>
-                <p class='verse'>{{ yesterday.verse }}</p>
-                <p>{{ yesterday.explanation[:150] }}...</p>
+            <div style='background: linear-gradient(135deg, #6B1A1A 0%, #9B3535 50%, #7A2525 100%);
+                border-radius: 12px; padding: 20px;
+                box-shadow: 0 4px 15px rgba(92, 26, 26, 0.3);'>
+                <p style='color: #E8B4A0; font-size: 10px; letter-spacing: 2px;
+                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+                    Previous Devotional
+                </p>
+                <h2 style='color: white; font-family: Lora, Georgia, serif;
+                    font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
+                    {{ yesterday.title }}
+                </h2>
+                <p style='color: #E8B4A0; font-style: italic; font-size: 13px;
+                    font-family: Lora, Georgia, serif; margin-bottom: 10px;'>{{ yesterday.verse }}</p>
+                <p style='color: #F5E6E0; font-size: 13px; line-height: 1.7;
+                    font-family: Inter, sans-serif; margin-bottom: 12px;'>
+                    {{ yesterday.explanation[:120] }}...
+                </p>
                 <a href='/devotionals/{{ yesterday.id }}'
-                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    style='color: #E8B4A0; font-weight: bold; text-decoration: none;
+                    font-family: Inter, sans-serif; font-size: 13px;'>
                     Read more →
                 </a>
             </div>
         {% else %}
-            <div class='devotional-card' style='margin-top: 10px;'>
-                <p>Previous devotionals will appear here.</p>
+            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+                border-radius: 12px; padding: 20px;'>
+                <p style='color: #F5E6E0; font-family: Inter, sans-serif; font-size: 14px;'>
+                    Previous devotionals will appear here.
+                </p>
             </div>
         {% endif %}
 
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
-            <h2 class='section-title' style='margin: 0;'>Latest Sermon</h2>
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
+            <h2 class='section-title' style='margin: 0;'>Sermons</h2>
             <a href='/sermons' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all →</a>
         </div>
         {% if latest_sermon %}
-            <div class='devotional-card' style='margin-top: 10px;'>
-                <h2>{{ latest_sermon.title }}</h2>
-                <p style='color: #999; font-size: 13px; font-family: Inter, sans-serif;'>{{ latest_sermon.date }}</p>
-                <p>{{ latest_sermon.description[:150] }}...</p>
+            <div style='background: linear-gradient(135deg, #2D2640 0%, #3D6B50 100%);
+                border-radius: 12px; padding: 20px;
+                box-shadow: 0 4px 15px rgba(45, 38, 64, 0.4);'>
+                <p style='color: #B8A9D9; font-size: 10px; letter-spacing: 2px;
+                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+                    Fellowship With The Word
+                </p>
+                <h2 style='color: white; font-family: Lora, Georgia, serif;
+                    font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
+                    {{ latest_sermon.title }}
+                </h2>
+                <p style='color: #B8A9D9; font-size: 12px; margin-bottom: 10px;
+                    font-family: Inter, sans-serif;'>{{ latest_sermon.date }}</p>
+                <p style='color: #E8E4F3; font-size: 13px; line-height: 1.7;
+                    font-family: Inter, sans-serif; margin-bottom: 12px;'>
+                    {{ latest_sermon.description[:120] }}...
+                </p>
                 <a href='/sermons/{{ latest_sermon.id }}'
-                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    style='color: #C8DBC9; font-weight: bold; text-decoration: none;
+                    font-family: Inter, sans-serif; font-size: 13px;'>
                     Watch sermon →
                 </a>
             </div>
         {% else %}
-            <div class='devotional-card' style='margin-top: 10px;'>
-                <p>Sermons coming soon.</p>
+            <div style='background: linear-gradient(135deg, #2D2640 0%, #3D6B50 100%);
+                border-radius: 12px; padding: 20px;'>
+                <p style='color: #E8E4F3; font-family: Inter, sans-serif; font-size: 14px;'>
+                    Sermons coming soon.
+                </p>
             </div>
         {% endif %}
 
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
             <h2 class='section-title' style='margin: 0;'>Bible</h2>
             <a href='/bible' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>Open Bible →</a>
         </div>
-        <div class='devotional-card' style='margin-top: 10px;'>
-            <p>Search any verse from the entire Bible.</p>
-            <a href='/bible' style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>Search the Bible →</a>
+        <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 50%, #0D2137 100%);
+            border-radius: 12px; padding: 20px;
+            box-shadow: 0 4px 15px rgba(10, 22, 40, 0.5);'>
+            <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
+                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+                The Holy Scriptures
+            </p>
+            <h2 style='color: white; font-family: Lora, Georgia, serif;
+                font-size: 17px; margin-bottom: 8px; line-height: 1.4;'>
+                Search the Word of God
+            </h2>
+            <p style='color: #B8C8D8; font-style: italic; font-family: Lora, Georgia, serif;
+                font-size: 13px; margin-bottom: 12px;'>
+                "Your word is a lamp to my feet and a light to my path" — Psalm 119:105
+            </p>
+            <a href='/bible'
+                style='color: #C9A84C; font-weight: bold; text-decoration: none;
+                font-family: Inter, sans-serif; font-size: 13px;
+                border: 1px solid #C9A84C; padding: 8px 16px; border-radius: 20px;'>
+                Open Bible →
+            </a>
         </div>
 
     </div>
