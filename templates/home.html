@@ -11,10 +11,10 @@
 
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
-            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+            <div style='background: linear-gradient(135deg, #7B4A00 0%, #C47A00 60%, #8B5500 100%);
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;
-                box-shadow: 0 4px 15px rgba(92, 26, 26, 0.4);'>
-                <p style='color: #E8B4A0; font-size: 11px; letter-spacing: 2px;
+                box-shadow: 0 4px 15px rgba(123, 74, 0, 0.4);'>
+                <p style='color: #FFE0A0; font-size: 11px; letter-spacing: 2px;
                     text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
                     Fellowship With The Word
                 </p>
@@ -22,9 +22,9 @@
                     font-size: 20px; margin-bottom: 8px; line-height: 1.4;'>
                     {{ devotional.title }}
                 </h2>
-                <p style='color: #E8B4A0; font-style: italic; font-family: Lora, Georgia, serif;
+                <p style='color: #FFE0A0; font-style: italic; font-family: Lora, Georgia, serif;
                     font-size: 14px; margin-bottom: 12px;'>{{ devotional.verse }}</p>
-                <p style='color: #F5E6E0; font-size: 14px; line-height: 1.8;
+                <p style='color: #FFF5E0; font-size: 14px; line-height: 1.8;
                     font-family: Inter, sans-serif; margin-bottom: 15px;'>
                     {{ devotional.explanation[:200] }}...
                 </p>
@@ -37,10 +37,10 @@
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+            <div style='background: linear-gradient(135deg, #7B4A00 0%, #C47A00 60%, #8B5500 100%);
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;'>
-                <p style='color: #F5E6E0;'>No devotional for today. Check back tomorrow.</p>
-                <a href='/devotionals' style='color: #E8B4A0; font-weight: bold;'>Browse all devotionals →</a>
+                <p style='color: #FFF5E0; font-family: Inter, sans-serif;'>No devotional for today. Check back tomorrow.</p>
+                <a href='/devotionals' style='color: #FFE0A0; font-weight: bold;'>Browse all devotionals →</a>
             </div>
         {% endif %}
 
@@ -49,10 +49,10 @@
             <a href='/devotionals' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all →</a>
         </div>
         {% if yesterday %}
-            <div style='background: linear-gradient(135deg, #6B1A1A 0%, #9B3535 50%, #7A2525 100%);
+            <div style='background: linear-gradient(135deg, #6B3D00 0%, #A86500 50%, #7A4800 100%);
                 border-radius: 12px; padding: 20px;
-                box-shadow: 0 4px 15px rgba(92, 26, 26, 0.3);'>
-                <p style='color: #E8B4A0; font-size: 10px; letter-spacing: 2px;
+                box-shadow: 0 4px 15px rgba(107, 61, 0, 0.3);'>
+                <p style='color: #FFE0A0; font-size: 10px; letter-spacing: 2px;
                     text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
                     Previous Devotional
                 </p>
@@ -60,22 +60,22 @@
                     font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
                     {{ yesterday.title }}
                 </h2>
-                <p style='color: #E8B4A0; font-style: italic; font-size: 13px;
+                <p style='color: #FFE0A0; font-style: italic; font-size: 13px;
                     font-family: Lora, Georgia, serif; margin-bottom: 10px;'>{{ yesterday.verse }}</p>
-                <p style='color: #F5E6E0; font-size: 13px; line-height: 1.7;
+                <p style='color: #FFF5E0; font-size: 13px; line-height: 1.7;
                     font-family: Inter, sans-serif; margin-bottom: 12px;'>
                     {{ yesterday.explanation[:120] }}...
                 </p>
                 <a href='/devotionals/{{ yesterday.id }}'
-                    style='color: #E8B4A0; font-weight: bold; text-decoration: none;
+                    style='color: #FFE0A0; font-weight: bold; text-decoration: none;
                     font-family: Inter, sans-serif; font-size: 13px;'>
                     Read more →
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(135deg, #5C1A1A 0%, #8B2E2E 100%);
+            <div style='background: linear-gradient(135deg, #6B3D00 0%, #A86500 50%, #7A4800 100%);
                 border-radius: 12px; padding: 20px;'>
-                <p style='color: #F5E6E0; font-family: Inter, sans-serif; font-size: 14px;'>
+                <p style='color: #FFF5E0; font-family: Inter, sans-serif; font-size: 14px;'>
                     Previous devotionals will appear here.
                 </p>
             </div>
