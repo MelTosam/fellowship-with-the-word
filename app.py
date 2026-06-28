@@ -26,7 +26,6 @@ def load_devotionals():
     cursor.execute('SELECT id, title, verse, explanation, date FROM devotionals')
     rows = cursor.fetchall()
     conn.close()
-
     devotionals = []
     for row in rows:
         devotional = {
@@ -45,7 +44,6 @@ def load_sermons():
     cursor.execute('SELECT id, title, date, description, video_url FROM sermons')
     rows = cursor.fetchall()
     conn.close()
-
     sermons = []
     for row in rows:
         sermon = {
@@ -65,14 +63,32 @@ def get_todays_devotional(devotionals):
             return devotional
     return None
 
+def get_yesterdays_devotional(devotionals):
+    yesterday = (datetime.date.today() - datetime.timedelta(days=1)).strftime('%d-%m-%Y')
+    for devotional in devotionals:
+        if devotional['date'] == yesterday:
+            return devotional
+    return None
+
+def get_latest_sermon(sermons):
+    if sermons:
+        return sermons[-1]
+    return None
+
 def get_placeholder(db_type):
     return '%s' if db_type == 'postgresql' else '?'
 
 @app.route('/')
 def home():
     devotionals = load_devotionals()
+    sermons = load_sermons()
     todays_devotional = get_todays_devotional(devotionals)
-    return render_template('home.html', devotional=todays_devotional)
+    yesterdays_devotional = get_yesterdays_devotional(devotionals)
+    latest_sermon = get_latest_sermon(sermons)
+    return render_template('home.html',
+        devotional=todays_devotional,
+        yesterday=yesterdays_devotional,
+        latest_sermon=latest_sermon)
 
 @app.route('/devotionals')
 def devotionals_page():
@@ -92,7 +108,6 @@ def devotional_detail(devotional_id):
     cursor.execute(f'SELECT id, title, verse, explanation, date FROM devotionals WHERE id = {ph}', (devotional_id,))
     row = cursor.fetchone()
     conn.close()
-
     if row:
         devotional = {
             'id': row[0],
@@ -123,7 +138,6 @@ def sermon_detail(sermon_id):
     cursor.execute(f'SELECT id, title, date, description, video_url FROM sermons WHERE id = {ph}', (sermon_id,))
     row = cursor.fetchone()
     conn.close()
-
     if row:
         sermon = {
             'id': row[0],
@@ -161,7 +175,6 @@ def bible():
     verse_text = None
     verse_reference = None
     error = None
-
     if request.method == 'POST':
         reference = request.form.get('reference')
         if reference:
@@ -175,7 +188,6 @@ def bible():
                     verse_reference = data['reference']
             except:
                 error = 'Something went wrong. Please try again.'
-
     return render_template('bible.html', verse_text=verse_text, verse_reference=verse_reference, error=error)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
@@ -199,15 +211,12 @@ def admin_logout():
 def add_devotional():
     if not session.get('admin'):
         return redirect(url_for('admin_login'))
-
     message = None
-
     if request.method == 'POST':
         title = request.form.get('title')
         verse = request.form.get('verse')
         explanation = request.form.get('explanation')
         date = request.form.get('date')
-
         conn, db_type = get_db_connection()
         cursor = conn.cursor()
         ph = get_placeholder(db_type)
@@ -217,24 +226,19 @@ def add_devotional():
         )
         conn.commit()
         conn.close()
-
         message = 'Devotional saved successfully.'
-
     return render_template('add_devotional.html', message=message)
 
 @app.route('/add-sermon', methods=['GET', 'POST'])
 def add_sermon():
     if not session.get('admin'):
         return redirect(url_for('admin_login'))
-
     message = None
-
     if request.method == 'POST':
         title = request.form.get('title')
         date = request.form.get('date')
         description = request.form.get('description')
         video_url = request.form.get('video_url')
-
         conn, db_type = get_db_connection()
         cursor = conn.cursor()
         ph = get_placeholder(db_type)
@@ -244,9 +248,7 @@ def add_sermon():
         )
         conn.commit()
         conn.close()
-
         message = 'Sermon saved successfully.'
-
     return render_template('add_sermon.html', message=message)
 
 @app.route('/static/sw.js')

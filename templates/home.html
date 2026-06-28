@@ -8,19 +8,74 @@
     </div>
 
     <div class='today-section'>
+
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
             <div class='devotional-card'>
                 <h2>{{ devotional.title }}</h2>
                 <p class='verse'>{{ devotional.verse }}</p>
-                <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
+                <p>{{ devotional.explanation[:200] }}...</p>
+                <a href='/devotionals/{{ devotional.id }}'
+                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    Read full devotional →
+                </a>
             </div>
         {% else %}
             <div class='devotional-card'>
-                <p>No devotional for today. Check back tomorrow or browse our archive.</p>
-                <a href='/devotionals' style='color: #9B8EC4; font-weight: bold;'>Browse All Devotionals →</a>
+                <p>No devotional for today. Check back tomorrow.</p>
+                <a href='/devotionals' style='color: #9B8EC4; font-weight: bold;'>Browse all devotionals →</a>
             </div>
         {% endif %}
+
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
+            <h2 class='section-title' style='margin: 0;'>Previous Devotional</h2>
+            <a href='/devotionals' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all →</a>
+        </div>
+        {% if yesterday %}
+            <div class='devotional-card' style='margin-top: 10px;'>
+                <h2>{{ yesterday.title }}</h2>
+                <p class='verse'>{{ yesterday.verse }}</p>
+                <p>{{ yesterday.explanation[:150] }}...</p>
+                <a href='/devotionals/{{ yesterday.id }}'
+                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    Read more →
+                </a>
+            </div>
+        {% else %}
+            <div class='devotional-card' style='margin-top: 10px;'>
+                <p>Previous devotionals will appear here.</p>
+            </div>
+        {% endif %}
+
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
+            <h2 class='section-title' style='margin: 0;'>Latest Sermon</h2>
+            <a href='/sermons' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all →</a>
+        </div>
+        {% if latest_sermon %}
+            <div class='devotional-card' style='margin-top: 10px;'>
+                <h2>{{ latest_sermon.title }}</h2>
+                <p style='color: #999; font-size: 13px; font-family: Inter, sans-serif;'>{{ latest_sermon.date }}</p>
+                <p>{{ latest_sermon.description[:150] }}...</p>
+                <a href='/sermons/{{ latest_sermon.id }}'
+                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>
+                    Watch sermon →
+                </a>
+            </div>
+        {% else %}
+            <div class='devotional-card' style='margin-top: 10px;'>
+                <p>Sermons coming soon.</p>
+            </div>
+        {% endif %}
+
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px;'>
+            <h2 class='section-title' style='margin: 0;'>Bible</h2>
+            <a href='/bible' style='color: #9B8EC4; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>Open Bible →</a>
+        </div>
+        <div class='devotional-card' style='margin-top: 10px;'>
+            <p>Search any verse from the entire Bible.</p>
+            <a href='/bible' style='color: #9B8EC4; font-weight: bold; text-decoration: none;'>Search the Bible →</a>
+        </div>
+
     </div>
 
     <script>
