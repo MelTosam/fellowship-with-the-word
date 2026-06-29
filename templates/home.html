@@ -9,6 +9,23 @@
 
     <div class='today-section'>
 
+        <div style='background: linear-gradient(135deg, #1A1A2E 0%, #2D2640 100%);
+            border-radius: 12px; padding: 20px; margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(26, 26, 46, 0.4); text-align: center;'>
+            <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
+                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 10px;'>
+                Word of the Day
+            </p>
+            <p style='color: white; font-family: Lora, Georgia, serif;
+                font-size: 16px; line-height: 1.8; font-style: italic; margin-bottom: 10px;'>
+                "{{ word_of_the_day.text }}"
+            </p>
+            <p style='color: #C9A84C; font-family: Inter, sans-serif;
+                font-size: 13px; font-weight: 600; margin: 0;'>
+                -- {{ word_of_the_day.verse }}
+            </p>
+        </div>
+
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
             <div style='background: linear-gradient(135deg, #7B4A00 0%, #C47A00 60%, #8B5500 100%);
@@ -33,7 +50,7 @@
                     font-family: Inter, sans-serif; font-size: 14px;
                     border: 1px solid rgba(255,255,255,0.4); padding: 8px 16px;
                     border-radius: 20px;'>
-                    Read full devotional ->
+                    Read full devotional
                 </a>
             </div>
         {% else %}

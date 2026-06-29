@@ -9,6 +9,45 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
+WORD_OF_THE_DAY = [
+    {"verse": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."},
+    {"verse": "Romans 8:28", "text": "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."},
+    {"verse": "Philippians 4:13", "text": "I can do all this through him who gives me strength."},
+    {"verse": "Jeremiah 29:11", "text": "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future."},
+    {"verse": "Psalm 23:1", "text": "The Lord is my shepherd, I lack nothing."},
+    {"verse": "Isaiah 40:31", "text": "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint."},
+    {"verse": "Proverbs 3:5-6", "text": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."},
+    {"verse": "Matthew 6:33", "text": "But seek first his kingdom and his righteousness, and all these things will be given to you as well."},
+    {"verse": "Romans 5:8", "text": "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us."},
+    {"verse": "2 Corinthians 5:17", "text": "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"},
+    {"verse": "Ephesians 2:8-9", "text": "For it is by grace you have been saved, through faith and this is not from yourselves, it is the gift of God, not by works, so that no one can boast."},
+    {"verse": "Galatians 2:20", "text": "I have been crucified with Christ and I no longer live, but Christ lives in me."},
+    {"verse": "Romans 8:1", "text": "Therefore, there is now no condemnation for those who are in Christ Jesus."},
+    {"verse": "John 1:12", "text": "Yet to all who did receive him, to those who believed in his name, he gave the right to become children of God."},
+    {"verse": "1 John 4:8", "text": "Whoever does not love does not know God, because God is love."},
+    {"verse": "Psalm 119:105", "text": "Your word is a lamp for my feet, a light on my path."},
+    {"verse": "John 14:6", "text": "Jesus answered, I am the way and the truth and the life. No one comes to the Father except through me."},
+    {"verse": "Romans 10:9", "text": "If you declare with your mouth, Jesus is Lord, and believe in your heart that God raised him from the dead, you will be saved."},
+    {"verse": "1 Corinthians 13:4-5", "text": "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking."},
+    {"verse": "Hebrews 11:1", "text": "Now faith is confidence in what we hope for and assurance about what we do not see."},
+    {"verse": "James 1:17", "text": "Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows."},
+    {"verse": "Colossians 3:23", "text": "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters."},
+    {"verse": "Joshua 1:9", "text": "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."},
+    {"verse": "Psalm 46:1", "text": "God is our refuge and strength, an ever-present help in trouble."},
+    {"verse": "Isaiah 41:10", "text": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you."},
+    {"verse": "Matthew 11:28", "text": "Come to me, all you who are weary and burdened, and I will give you rest."},
+    {"verse": "John 10:10", "text": "The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full."},
+    {"verse": "Romans 12:2", "text": "Do not conform to the pattern of this world, but be transformed by the renewing of your mind."},
+    {"verse": "Philippians 4:7", "text": "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus."},
+    {"verse": "1 Peter 5:7", "text": "Cast all your anxiety on him because he cares for you."},
+    {"verse": "Lamentations 3:22-23", "text": "Because of the Lords great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."},
+]
+
+def get_word_of_the_day():
+    day_of_year = datetime.date.today().timetuple().tm_yday
+    index = day_of_year % len(WORD_OF_THE_DAY)
+    return WORD_OF_THE_DAY[index]
+
 def get_db_connection():
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL and DATABASE_URL.startswith('postgresql'):
@@ -85,10 +124,12 @@ def home():
     todays_devotional = get_todays_devotional(devotionals)
     yesterdays_devotional = get_yesterdays_devotional(devotionals)
     latest_sermon = get_latest_sermon(sermons)
+    word_of_the_day = get_word_of_the_day()
     return render_template('home.html',
         devotional=todays_devotional,
         yesterday=yesterdays_devotional,
-        latest_sermon=latest_sermon)
+        latest_sermon=latest_sermon,
+        word_of_the_day=word_of_the_day)
 
 @app.route('/devotionals')
 def devotionals_page():
