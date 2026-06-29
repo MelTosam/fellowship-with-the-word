@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 * {
     margin: 0;
@@ -7,18 +7,19 @@
 }
 
 body {
-    background-color: #F8F7FF;
-    color: #2C2C2C;
+    background-color: #0F0F14;
+    color: #F0EDE8;
     font-family: 'Inter', sans-serif;
 }
 
 nav {
-    background-color: #2D2640;
+    background-color: #0A0A0F;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    border-bottom: 1px solid rgba(155, 142, 196, 0.2);
 }
 
 .nav-center {
@@ -27,20 +28,19 @@ nav {
 
 .nav-brand {
     color: rgba(255, 255, 255, 0.90);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     text-decoration: none;
     font-family: 'Lora', serif;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .nav-tagline {
-    color: rgba(200, 219, 201, 0.75);
+    color: rgba(200, 219, 201, 0.65);
     font-size: 11px;
     font-style: italic;
     font-family: 'Lora', serif;
     margin-top: 3px;
-    letter-spacing: 0.3px;
 }
 
 .nav-links {
@@ -50,15 +50,14 @@ nav {
 }
 
 .nav-links a {
-    color: rgba(255, 255, 255, 0.80);
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.3px;
 }
 
 .nav-links a:hover {
-    color: #C8DBC9;
+    color: #C9A84C;
 }
 
 .hamburger {
@@ -73,44 +72,44 @@ nav {
 
 .mobile-menu {
     display: none;
-    background-color: #3D6B50;
+    background-color: #0A0A0F;
     padding: 10px 0;
+    border-bottom: 1px solid rgba(155, 142, 196, 0.2);
 }
 
 .mobile-menu a {
     display: block;
-    color: white;
+    color: #F0EDE8;
     text-decoration: none;
     padding: 14px 20px;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .mobile-menu a:hover {
-    background-color: #7B6FA0;
+    color: #C9A84C;
 }
 
 .hero {
-    background: linear-gradient(rgba(20, 15, 35, 0.78), rgba(20, 15, 35, 0.78)), url('https://images.unsplash.com/photo-1611512010662-d0a00863fc5a?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    background: linear-gradient(rgba(10, 8, 18, 0.78), rgba(10, 8, 18, 0.78)), url('https://images.unsplash.com/photo-1611512010662-d0a00863fc5a?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
     padding: 55px 30px;
     text-align: center;
     color: white;
-    position: relative;
 }
 
 .greeting {
-    font-size: 15px;
+    font-size: 13px;
     font-family: 'Inter', sans-serif;
     font-weight: 300;
-    color: #C8DBC9;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
+    color: #C9A84C;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
 .hero-title {
-    font-size: 28px;
+    font-size: 26px;
     font-family: 'Lora', serif;
     font-weight: 600;
     margin-bottom: 14px;
@@ -121,8 +120,8 @@ nav {
 }
 
 .hero-tagline {
-    font-size: 15px;
-    color: #B8A9D9;
+    font-size: 14px;
+    color: rgba(200, 219, 201, 0.8);
     margin-bottom: 0;
     font-style: italic;
     font-family: 'Lora', serif;
@@ -130,39 +129,39 @@ nav {
 
 .today-section {
     max-width: 800px;
-    margin: 35px auto;
+    margin: 30px auto;
     padding: 0 20px;
 }
 
 .section-title {
-    color: #7B6FA0;
-    font-size: 13px;
+    color: #C9A84C;
+    font-size: 11px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #3D6B50;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
 }
 
 .container {
     max-width: 800px;
-    margin: 35px auto;
+    margin: 30px auto;
     padding: 0 20px;
 }
 
 h1 {
-    color: #7B6FA0;
+    color: #F0EDE8;
     font-size: 24px;
     font-family: 'Lora', serif;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #3D6B50;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.3);
 }
 
 h2 {
-    color: #3D6B50;
+    color: #C9A84C;
     font-size: 18px;
     font-family: 'Lora', serif;
     margin-bottom: 10px;
@@ -172,47 +171,46 @@ h2 {
 p {
     line-height: 1.85;
     margin-bottom: 15px;
-    color: #444;
+    color: #C8C4BE;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
 }
 
 .devotional-card {
-    background: white;
-    border-left: 5px solid #3D6B50;
-    border-top: 3px solid #7B6FA0;
-    padding: 25px;
-    margin-bottom: 20px;
+    background: #1A1A24;
+    border-left: 3px solid #C9A84C;
+    padding: 20px;
+    margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(123, 111, 160, 0.12);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .verse {
-    color: #3D6B50;
+    color: #C9A84C;
     font-style: italic;
     font-size: 15px;
     margin-bottom: 12px;
-    font-weight: 600;
+    font-weight: 400;
     font-family: 'Lora', serif;
 }
 
 a {
-    color: #3D6B50;
+    color: #C9A84C;
 }
 
 a:hover {
-    color: #7B6FA0;
+    color: #9B8EC4;
 }
 
 footer {
-    background-color: #2D2640;
+    background-color: #0A0A0F;
     text-align: center;
     padding: 25px;
-    color: #B8A9D9;
+    color: rgba(200, 196, 190, 0.5);
     font-size: 13px;
     margin-top: 60px;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 0.5px;
+    border-top: 1px solid rgba(155, 142, 196, 0.15);
 }
 
 .bottom-nav {
@@ -229,7 +227,7 @@ footer {
     }
 
     .nav-brand {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .hamburger {
@@ -241,11 +239,11 @@ footer {
     }
 
     .hero-title {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .greeting {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     body {
@@ -276,7 +274,7 @@ footer {
     }
 
     .devotional-card {
-        padding: 18px;
+        padding: 15px;
     }
 
     footer {
@@ -290,8 +288,8 @@ footer {
         left: 0;
         right: 0;
         width: 100%;
-        background-color: white;
-        border-top: 1px solid #e0e0e0;
+        background-color: #0A0A0F;
+        border-top: 1px solid rgba(155, 142, 196, 0.2);
         z-index: 1000;
         padding: 6px 0 10px 0;
         justify-content: space-around;
@@ -304,26 +302,26 @@ footer {
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        color: #999;
+        color: rgba(200, 196, 190, 0.4);
         flex: 1;
         padding: 4px 0;
     }
 
     .bottom-nav-item:hover {
-        color: #7B6FA0;
+        color: #C9A84C;
     }
 
     .bottom-nav-icon {
         width: 24px;
         height: 24px;
         margin-bottom: 4px;
-        fill: #999;
+        fill: rgba(200, 196, 190, 0.4);
     }
 
     .bottom-nav-label {
         font-size: 10px;
         font-family: 'Inter', sans-serif;
-        color: #999;
+        color: rgba(200, 196, 190, 0.4);
         text-align: center;
     }
 }
