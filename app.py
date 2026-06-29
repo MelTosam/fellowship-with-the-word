@@ -63,6 +63,23 @@ NEW_TESTAMENT = [
     "Jude", "Revelation"
 ]
 
+BOOK_CHAPTERS = {
+    "Genesis": 50, "Exodus": 40, "Leviticus": 27, "Numbers": 36, "Deuteronomy": 34,
+    "Joshua": 24, "Judges": 21, "Ruth": 4, "1 Samuel": 31, "2 Samuel": 24,
+    "1 Kings": 22, "2 Kings": 25, "1 Chronicles": 29, "2 Chronicles": 36, "Ezra": 10,
+    "Nehemiah": 13, "Esther": 10, "Job": 42, "Psalms": 150, "Proverbs": 31,
+    "Ecclesiastes": 12, "Song of Solomon": 8, "Isaiah": 66, "Jeremiah": 52, "Lamentations": 5,
+    "Ezekiel": 48, "Daniel": 12, "Hosea": 14, "Joel": 3, "Amos": 9,
+    "Obadiah": 1, "Jonah": 4, "Micah": 7, "Nahum": 3, "Habakkuk": 3,
+    "Zephaniah": 3, "Haggai": 2, "Zechariah": 14, "Malachi": 4,
+    "Matthew": 28, "Mark": 16, "Luke": 24, "John": 21, "Acts": 28,
+    "Romans": 16, "1 Corinthians": 16, "2 Corinthians": 13, "Galatians": 6, "Ephesians": 6,
+    "Philippians": 4, "Colossians": 4, "1 Thessalonians": 5, "2 Thessalonians": 3, "1 Timothy": 6,
+    "2 Timothy": 4, "Titus": 3, "Philemon": 1, "Hebrews": 13, "James": 5,
+    "1 Peter": 5, "2 Peter": 3, "1 John": 5, "2 John": 1, "3 John": 1,
+    "Jude": 1, "Revelation": 22
+}
+
 def get_word_of_the_day():
     day_of_year = datetime.date.today().timetuple().tm_yday
     index = day_of_year % len(WORD_OF_THE_DAY)
@@ -231,33 +248,40 @@ def profile():
 def privacy():
     return render_template('privacy.html')
 
-@app.route('/bible', methods=['GET', 'POST'])
+@app.route('/bible')
 def bible():
+    selected_book = request.args.get('book', '')
+    selected_chapter = request.args.get('chapter', '')
     verse_text = None
     verse_reference = None
     error = None
-    selected_book = request.args.get('book', '')
+    chapter_count = 0
+    chapters = []
 
-    if request.method == 'POST':
-        reference = request.form.get('reference')
-        selected_book = request.form.get('book', '')
-        if reference:
-            try:
-                response = requests.get(f'https://bible-api.com/{reference}')
-                data = response.json()
-                if 'error' in data:
-                    error = 'Verse not found. Try a format like John 3:16 or Psalms 23.'
-                else:
-                    verse_text = data['text']
-                    verse_reference = data['reference']
-            except:
-                error = 'Something went wrong. Please try again.'
+    if selected_book:
+        chapter_count = BOOK_CHAPTERS.get(selected_book, 0)
+        chapters = list(range(1, chapter_count + 1))
+
+    if selected_book and selected_chapter:
+        try:
+            reference = f'{selected_book}+{selected_chapter}'
+            response = requests.get(f'https://bible-api.com/{reference}')
+            data = response.json()
+            if 'error' in data:
+                error = 'Chapter not found. Please try again.'
+            else:
+                verse_text = data['text']
+                verse_reference = data['reference']
+        except:
+            error = 'Something went wrong. Please try again.'
 
     return render_template('bible.html',
         verse_text=verse_text,
         verse_reference=verse_reference,
         error=error,
         selected_book=selected_book,
+        selected_chapter=selected_chapter,
+        chapters=chapters,
         old_testament=OLD_TESTAMENT,
         new_testament=NEW_TESTAMENT)
 
