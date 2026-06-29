@@ -1,34 +1,25 @@
-devotionals = [
-    {"title": "Righteousness",
-    "verse": "Romans 5:17",
-    "explanation": "We have become Gods righteousness in christ",
-    "date": "25-06-2026"},
-
+sermons = [
     {"title": "The nature of God",
-     "verse": "James 1:17",
-     "explanation": "The character of God is seen in Christ",
-     "date": "24-05-2026"
-     },
+     "description": "We have received a nature that is incorruptible",
+      "date": "29-06-2026"},
 
-     {"title": "Justification",
-      "verse": "romans 3:9",
-      "explanation": "We have been justified by grace through faith",
-      "date": "23-06-2026"}
-      ]
+      {"title": "Righteousness by faith",
+       "description": "We have become the righteousness of God in Christ",
+       "date": "24-06-2026"},
 
-def devotional_keyword(devotionals, keyword):
-    matching = []
-    for devotional in devotionals:
-        if keyword.lower() in devotional["title"].lower() or keyword.lower() in devotional["explanation"].lower():
-            matching.append(devotional)
-    return matching  
-      
-result = devotional_keyword(devotionals, "Christ")       
-for devotional in result:
-    print("title:", devotional["title"])
-    print("explanation:", devotional["explanation"])
-    print("---")
+       {"title": "Faith and works",
+        "description": "true faith produces works that glorify Christ",
+        "date": "22-06-2026"}
+]
+def sermons_keyword(sermons, keyword):
+    result = []
+    for sermon in sermons:
+        if keyword.lower() in sermon["title"].lower() or keyword.lower() in sermon["description"].lower():
+            result.append(sermon)
+    return result
 
-
-
-
+result = sermons_keyword(sermons, "God")
+for sermon in result:
+    print("title:", sermon["title"])
+    print("description:", sermon["description"])
+    print("---")              
