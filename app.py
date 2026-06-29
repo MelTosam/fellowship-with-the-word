@@ -252,10 +252,9 @@ def privacy():
 def bible():
     selected_book = request.args.get('book', '')
     selected_chapter = request.args.get('chapter', '')
-    verse_text = None
+    verses = []
     verse_reference = None
     error = None
-    chapter_count = 0
     chapters = []
 
     if selected_book:
@@ -270,13 +269,13 @@ def bible():
             if 'error' in data:
                 error = 'Chapter not found. Please try again.'
             else:
-                verse_text = data['text']
-                verse_reference = data['reference']
+                verses = data.get('verses', [])
+                verse_reference = data.get('reference', '')
         except:
             error = 'Something went wrong. Please try again.'
 
     return render_template('bible.html',
-        verse_text=verse_text,
+        verses=verses,
         verse_reference=verse_reference,
         error=error,
         selected_book=selected_book,
