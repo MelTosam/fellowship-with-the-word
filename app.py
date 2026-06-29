@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -284,7 +284,34 @@ def bible():
         old_testament=OLD_TESTAMENT,
         new_testament=NEW_TESTAMENT)
 
-@app.route('/admin/login', methods=['GET', 'POST'])
+@app.route('/bible/search')
+def bible_search():
+    reference = request.args.get('reference', '')
+    verses = []
+    verse_reference = None
+    error = None
+
+    if reference:
+        try:
+            response = requests.get(f'https://bible-api.com/{reference}')
+            data = response.json()
+            if 'error' in data:
+                error = 'Verse not found. Try a format like John 3:16 or Romans 8.'
+            else:
+                verses = data.get('verses', [])
+                verse_reference = data.get('reference', '')
+        except:
+            error = 'Something went wrong. Please try again.'
+
+    return render_template('bible_search.html',
+        verses=verses,
+        verse_reference=verse_reference,
+        error=error,
+        reference=reference,
+        old_testament=OLD_TESTAMENT,
+        new_testament=NEW_TESTAMENT)
+
+@app.route('/admin/login'), methods=['GET', 'POST'])
 def admin_login():
     error = None
     if request.method == 'POST':

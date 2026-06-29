@@ -12,8 +12,27 @@
             </p>
             <p style='color: #B8C8D8; font-style: italic; font-family: Lora, Georgia, serif;
                 font-size: 14px; margin: 0;'>
-                Select a book to read by chapter
+                Select a book or search a verse directly
             </p>
+        </div>
+
+        <div class='devotional-card' style='margin-bottom: 25px;'>
+            <form method='GET' action='/bible/search'>
+                <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;'>
+                    Quick verse search
+                </p>
+                <p style='font-size: 13px; color: #777; margin-bottom: 12px; font-family: Inter, sans-serif;'>
+                    Try "John 3:16" or "Romans 8:28"
+                </p>
+                <input type='text' name='reference' placeholder='e.g. John 3:16'
+                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                <button type='submit'
+                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    Search
+                </button>
+            </form>
         </div>
 
         <h2 class='section-title'>Old Testament</h2>
@@ -49,13 +68,29 @@
             font-family: Inter, sans-serif; font-size: 14px;'>Back to all books</a>
 
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
-            border-radius: 12px; padding: 20px; margin: 15px 0 25px 0;'>
+            border-radius: 12px; padding: 20px; margin: 15px 0 20px 0;'>
             <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
                 text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
                 Book
             </p>
             <h2 style='color: white; font-family: Lora, Georgia, serif;
                 font-size: 22px; margin: 0;'>{{ selected_book }}</h2>
+        </div>
+
+        <div class='devotional-card' style='margin-bottom: 20px;'>
+            <form method='GET' action='/bible/search'>
+                <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;'>
+                    Search in {{ selected_book }}
+                </p>
+                <input type='text' name='reference' placeholder='e.g. {{ selected_book }} 3:16'
+                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                <button type='submit'
+                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    Search
+                </button>
+            </form>
         </div>
 
         <h2 class='section-title'>Select a Chapter</h2>
@@ -77,13 +112,26 @@
             font-family: Inter, sans-serif; font-size: 14px;'>Back to {{ selected_book }}</a>
 
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
-            border-radius: 12px; padding: 20px; margin: 15px 0 25px 0;'>
+            border-radius: 12px; padding: 20px; margin: 15px 0 20px 0;'>
             <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
                 text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
                 Reading
             </p>
             <h2 style='color: white; font-family: Lora, Georgia, serif;
                 font-size: 22px; margin: 0;'>{{ selected_book }} {{ selected_chapter }}</h2>
+        </div>
+
+        <div class='devotional-card' style='margin-bottom: 20px;'>
+            <form method='GET' action='/bible/search'>
+                <input type='text' name='reference' placeholder='Search a verse e.g. {{ selected_book }} {{ selected_chapter }}:1'
+                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                <button type='submit'
+                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    Search
+                </button>
+            </form>
         </div>
 
         {% if verses %}
@@ -116,7 +164,6 @@
                     Next Chapter
                 </a>
             </div>
-
         {% endif %}
 
         {% if error %}
