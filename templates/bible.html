@@ -2,32 +2,103 @@
 
 {% block content %}
     <h1>Bible</h1>
-    <p>Search for any Bible verse by entering a reference below.</p>
+
+    {% if not selected_book %}
+    <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 50%, #0D2137 100%);
+        border-radius: 12px; padding: 20px; margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(10, 22, 40, 0.5);'>
+        <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
+            text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+            The Holy Scriptures
+        </p>
+        <p style='color: #B8C8D8; font-style: italic; font-family: Lora, Georgia, serif;
+            font-size: 14px; margin: 0;'>
+            Select a book to search by chapter, verse or keyword
+        </p>
+    </div>
+
+    <h2 class='section-title'>Old Testament</h2>
+    <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 25px;'>
+        {% for book in old_testament %}
+            <a href='/bible?book={{ book }}' style='text-decoration: none;'>
+                <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
+                    border-radius: 8px; padding: 12px 15px;
+                    border-left: 3px solid #C9A84C;'>
+                    <p style='color: white; font-family: Lora, Georgia, serif;
+                        font-size: 14px; margin: 0;'>{{ book }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <h2 class='section-title'>New Testament</h2>
+    <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 25px;'>
+        {% for book in new_testament %}
+            <a href='/bible?book={{ book }}' style='text-decoration: none;'>
+                <div style='background: linear-gradient(135deg, #2D2640 0%, #3D6B50 100%);
+                    border-radius: 8px; padding: 12px 15px;
+                    border-left: 3px solid #9B8EC4;'>
+                    <p style='color: white; font-family: Lora, Georgia, serif;
+                        font-size: 14px; margin: 0;'>{{ book }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <a href='/bible' style='color: #C9A84C; text-decoration: none; font-family: Inter, sans-serif;
+        font-size: 14px;'>← Back to all books</a>
+
+    <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
+        border-radius: 12px; padding: 20px; margin: 15px 0 25px 0;'>
+        <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+            Searching in
+        </p>
+        <h2 style='color: white; font-family: Lora, Georgia, serif;
+            font-size: 22px; margin: 0;'>{{ selected_book }}</h2>
+    </div>
 
     <div class='devotional-card'>
-        <h2>Search a Verse</h2>
-        <form method='POST'>
-            <input type='text' name='reference' placeholder='e.g. John 3:16 or Romans 8:1-5'
-                style='width: 100%; padding: 10px; margin-bottom: 15px;
-                border: 2px solid #9B8EC4; border-radius: 4px; font-size: 16px;'>
+        <form method='POST' action='/bible'>
+            <input type='hidden' name='book' value='{{ selected_book }}'>
+            <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;'>
+                Search by reference or keyword
+            </p>
+            <p style='font-size: 13px; color: #777; margin-bottom: 12px; font-family: Inter, sans-serif;'>
+                Examples: "{{ selected_book }} 1:1" or "{{ selected_book }} 3" or just type a keyword
+            </p>
+            <input type='text' name='reference' placeholder='e.g. {{ selected_book }} 1:1'
+                style='width: 100%; padding: 10px; border: 2px solid #9B8EC4;
+                border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;
+                margin-bottom: 12px;'>
             <button type='submit'
                 style='background-color: #9B8EC4; color: white; padding: 10px 25px;
-                border: none; border-radius: 4px; font-size: 16px; cursor: pointer;'>
+                border: none; border-radius: 4px; font-size: 15px; cursor: pointer;'>
                 Search
             </button>
         </form>
     </div>
 
-    {% if error %}
-        <div class='devotional-card'>
-            <p style='color: red;'>{{ error }}</p>
+    {% if verse_text %}
+        <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
+            border-radius: 12px; padding: 20px; margin-top: 20px;'>
+            <p style='color: #C9A84C; font-size: 12px; font-weight: 600;
+                font-family: Inter, sans-serif; margin-bottom: 10px;'>
+                {{ verse_reference }}
+            </p>
+            <p style='color: white; font-family: Lora, Georgia, serif;
+                font-size: 16px; line-height: 1.9; font-style: italic; margin: 0;'>
+                {{ verse_text }}
+            </p>
         </div>
     {% endif %}
 
-    {% if verse_text %}
-        <div class='devotional-card'>
-            <h2>{{ verse_reference }}</h2>
-            <p class='verse'>{{ verse_text }}</p>
+    {% if error %}
+        <div style='background: #3D1515; border-radius: 8px; padding: 15px; margin-top: 15px;'>
+            <p style='color: #F5C4A0; font-family: Inter, sans-serif; margin: 0;'>{{ error }}</p>
         </div>
+    {% endif %}
+
     {% endif %}
 {% endblock %}

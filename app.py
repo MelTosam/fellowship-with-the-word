@@ -43,6 +43,26 @@ WORD_OF_THE_DAY = [
     {"verse": "Lamentations 3:22-23", "text": "Because of the Lords great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness."},
 ]
 
+OLD_TESTAMENT = [
+    "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy",
+    "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel",
+    "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra",
+    "Nehemiah", "Esther", "Job", "Psalms", "Proverbs",
+    "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations",
+    "Ezekiel", "Daniel", "Hosea", "Joel", "Amos",
+    "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk",
+    "Zephaniah", "Haggai", "Zechariah", "Malachi"
+]
+
+NEW_TESTAMENT = [
+    "Matthew", "Mark", "Luke", "John", "Acts",
+    "Romans", "1 Corinthians", "2 Corinthians", "Galatians", "Ephesians",
+    "Philippians", "Colossians", "1 Thessalonians", "2 Thessalonians", "1 Timothy",
+    "2 Timothy", "Titus", "Philemon", "Hebrews", "James",
+    "1 Peter", "2 Peter", "1 John", "2 John", "3 John",
+    "Jude", "Revelation"
+]
+
 def get_word_of_the_day():
     day_of_year = datetime.date.today().timetuple().tm_yday
     index = day_of_year % len(WORD_OF_THE_DAY)
@@ -216,20 +236,30 @@ def bible():
     verse_text = None
     verse_reference = None
     error = None
+    selected_book = request.args.get('book', '')
+
     if request.method == 'POST':
         reference = request.form.get('reference')
+        selected_book = request.form.get('book', '')
         if reference:
             try:
                 response = requests.get(f'https://bible-api.com/{reference}')
                 data = response.json()
                 if 'error' in data:
-                    error = 'Verse not found. Please check your reference and try again.'
+                    error = 'Verse not found. Try a format like John 3:16 or Psalms 23.'
                 else:
                     verse_text = data['text']
                     verse_reference = data['reference']
             except:
                 error = 'Something went wrong. Please try again.'
-    return render_template('bible.html', verse_text=verse_text, verse_reference=verse_reference, error=error)
+
+    return render_template('bible.html',
+        verse_text=verse_text,
+        verse_reference=verse_reference,
+        error=error,
+        selected_book=selected_book,
+        old_testament=OLD_TESTAMENT,
+        new_testament=NEW_TESTAMENT)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
