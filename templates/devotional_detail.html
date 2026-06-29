@@ -1,13 +1,37 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
-    <a href='/devotionals' style='color: #7C9A7E; text-decoration: none;'>← Back to Devotionals</a>
+    <a href='/devotionals' style='color: #F5C4A0; text-decoration: none; font-family: Inter, sans-serif;
+        font-size: 14px;'>← Back to Devotionals</a>
 
-    <div class='devotional-card' style='margin-top: 20px;'>
-        <h1>{{ devotional.title }}</h1>
-        <p class='verse'>{{ devotional.verse }}</p>
-        <p style='color: #999; font-size: 13px;'>{{ devotional.date }}</p>
-        <hr style='border: none; border-top: 2px solid #f0eef8; margin: 15px 0;'>
-        <p style='white-space: pre-wrap;'>{{ devotional.explanation }}</p>
+    <div style='margin-top: 20px;'>
+        <div style='background: linear-gradient(135deg, #7B4A00 0%, #C47A00 60%, #8B5500 100%);
+            border-radius: 12px; padding: 25px; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(123, 74, 0, 0.4);'>
+            <p style='color: #FFE0A0; font-size: 11px; letter-spacing: 2px;
+                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
+                Fellowship With The Word · {{ devotional.date }}
+            </p>
+            <h1 style='color: white; font-family: Lora, Georgia, serif;
+                font-size: 24px; margin-bottom: 12px; line-height: 1.4; border: none; padding: 0;'>
+                {{ devotional.title }}
+            </h1>
+            <p style='color: #FFE0A0; font-style: italic; font-family: Lora, Georgia, serif;
+                font-size: 16px; margin-bottom: 0;'>{{ devotional.verse }}</p>
+        </div>
+
+        <div class='devotional-card'>
+            <p style='white-space: pre-wrap; line-height: 1.9; font-size: 16px;
+                font-family: Inter, sans-serif; color: #333;'>{{ devotional.explanation }}</p>
+        </div>
+
+        <div style='margin-top: 20px; text-align: center;'>
+            <a href='/devotionals'
+                style='color: #9B8EC4; font-weight: bold; text-decoration: none;
+                font-family: Inter, sans-serif; font-size: 14px;
+                border: 2px solid #9B8EC4; padding: 10px 25px; border-radius: 25px;'>
+                ← Back to all devotionals
+            </a>
+        </div>
     </div>
 {% endblock %}
