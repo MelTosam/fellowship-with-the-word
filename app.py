@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -307,11 +307,9 @@ def bible_search():
         verses=verses,
         verse_reference=verse_reference,
         error=error,
-        reference=reference,
-        old_testament=OLD_TESTAMENT,
-        new_testament=NEW_TESTAMENT)
+        reference=reference)
 
-@app.route('/admin/login'), methods=['GET', 'POST'])
+@app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     error = None
     if request.method == 'POST':
