@@ -5,7 +5,7 @@
 
     {% if not selected_book %}
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 50%, #0D2137 100%);
-            border-radius: 12px; padding: 20px; margin-bottom: 25px;'>
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;'>
             <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
                 text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
                 The Holy Scriptures
@@ -16,20 +16,25 @@
             </p>
         </div>
 
-        <div class='devotional-card' style='margin-bottom: 25px;'>
+        <div style='background: linear-gradient(135deg, #1A1A2E 0%, #2D2640 100%);
+            border-radius: 12px; padding: 20px; margin-bottom: 25px;'>
             <form method='GET' action='/bible/search'>
-                <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;'>
+                <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
+                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
                     Quick verse search
                 </p>
-                <p style='font-size: 13px; color: #777; margin-bottom: 12px; font-family: Inter, sans-serif;'>
+                <p style='font-size: 13px; color: #B8C8D8; margin-bottom: 12px;
+                    font-family: Inter, sans-serif; font-style: italic;'>
                     Try "John 3:16" or "Romans 8:28"
                 </p>
                 <input type='text' name='reference' placeholder='e.g. John 3:16'
-                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
-                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                    style='width: 70%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;
+                    background: rgba(255,255,255,0.1); color: white;'>
                 <button type='submit'
-                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
-                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    style='background-color: #C9A84C; color: #0A1628; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px;
+                    cursor: pointer; margin-left: 5px; font-weight: 700;'>
                     Search
                 </button>
             </form>
@@ -77,17 +82,21 @@
                 font-size: 22px; margin: 0;'>{{ selected_book }}</h2>
         </div>
 
-        <div class='devotional-card' style='margin-bottom: 20px;'>
+        <div style='background: linear-gradient(135deg, #1A1A2E 0%, #2D2640 100%);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;'>
             <form method='GET' action='/bible/search'>
-                <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;'>
+                <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
+                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
                     Search in {{ selected_book }}
                 </p>
                 <input type='text' name='reference' placeholder='e.g. {{ selected_book }} 3:16'
-                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
-                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                    style='width: 70%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;
+                    background: rgba(255,255,255,0.1); color: white;'>
                 <button type='submit'
-                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
-                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    style='background-color: #C9A84C; color: #0A1628; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px;
+                    cursor: pointer; margin-left: 5px; font-weight: 700;'>
                     Search
                 </button>
             </form>
@@ -121,14 +130,18 @@
                 font-size: 22px; margin: 0;'>{{ selected_book }} {{ selected_chapter }}</h2>
         </div>
 
-        <div class='devotional-card' style='margin-bottom: 20px;'>
+        <div style='background: linear-gradient(135deg, #1A1A2E 0%, #2D2640 100%);
+            border-radius: 12px; padding: 20px; margin-bottom: 20px;'>
             <form method='GET' action='/bible/search'>
-                <input type='text' name='reference' placeholder='Search a verse e.g. {{ selected_book }} {{ selected_chapter }}:1'
-                    style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
-                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
+                <input type='text' name='reference'
+                    placeholder='Search e.g. {{ selected_book }} {{ selected_chapter }}:1'
+                    style='width: 70%; padding: 10px; border: 2px solid #9B8EC4;
+                    border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;
+                    background: rgba(255,255,255,0.1); color: white;'>
                 <button type='submit'
-                    style='background-color: #9B8EC4; color: white; padding: 10px 18px;
-                    border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                    style='background-color: #C9A84C; color: #0A1628; padding: 10px 18px;
+                    border: none; border-radius: 4px; font-size: 15px;
+                    cursor: pointer; margin-left: 5px; font-weight: 700;'>
                     Search
                 </button>
             </form>
