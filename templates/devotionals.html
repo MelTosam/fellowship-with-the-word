@@ -27,26 +27,27 @@
     {% if devotionals %}
         {% for devotional in devotionals %}
             <a href='/devotionals/{{ devotional.id }}' style='text-decoration: none;'>
-                <div style='background: linear-gradient(rgba(20, 12, 3, 0.58), rgba(25, 15, 5, 0.62)), url("https://images.unsplash.com/photo-1524492514790-8310bf594ea4?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+                <div style='background: linear-gradient(rgba(245, 235, 215, 0.55), rgba(240, 228, 205, 0.55)), url("https://images.unsplash.com/photo-1524492514790-8310bf594ea4?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
                     border-radius: 10px; padding: 20px; margin-bottom: 12px;
-                    border-left: 3px solid #C9A84C;'>
-                    <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
-                        text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+                    border-left: 3px solid #8B5500;'>
+                    <p style='color: #6B3A00; font-size: 10px; letter-spacing: 2px;
+                        text-transform: uppercase; font-family: Inter, sans-serif;
+                        font-weight: 700; margin-bottom: 6px;'>
                         {{ devotional.date }}
                     </p>
-                    <h2 style='color: white; font-family: Lora, Georgia, serif;
+                    <h2 style='color: #1A0800; font-family: Lora, Georgia, serif;
                         font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
                         {{ devotional.title }}
                     </h2>
-                    <p style='color: #E8D5B0; font-style: italic; font-size: 13px;
+                    <p style='color: #4A2800; font-style: italic; font-size: 13px;
                         font-family: Lora, Georgia, serif; margin-bottom: 8px;'>
                         {{ devotional.verse }}
                     </p>
-                    <p style='color: rgba(240, 237, 232, 0.75); font-size: 13px;
+                    <p style='color: #2A1500; font-size: 13px;
                         line-height: 1.7; font-family: Inter, sans-serif; margin-bottom: 8px;'>
                         {{ devotional.explanation[:100] }}...
                     </p>
-                    <p style='color: #C9A84C; font-weight: 600;
+                    <p style='color: #8B5500; font-weight: 700;
                         font-family: Inter, sans-serif; font-size: 13px; margin: 0;'>
                         Read more →
                     </p>
