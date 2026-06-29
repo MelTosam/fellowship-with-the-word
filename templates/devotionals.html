@@ -3,20 +3,20 @@
 {% block content %}
     <h1>Devotionals</h1>
 
-    <div class='devotional-card' style='padding: 15px 20px;'>
+    <div style='margin-bottom: 20px;'>
         <form method='GET' action='/devotionals'>
             <input type='text' name='search' value='{{ keyword }}' placeholder='Search devotionals...'
-                style='width: 80%; padding: 10px; border: 2px solid #9B8EC4;
+                style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
                 border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
             <button type='submit'
-                style='background-color: #9B8EC4; color: white; padding: 10px 20px;
+                style='background-color: #9B8EC4; color: white; padding: 10px 18px;
                 border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
                 Search
             </button>
         </form>
         {% if keyword %}
-            <p style='margin-top: 10px; font-size: 13px; color: #999;'>
-                Showing results for "{{ keyword }}" — 
+            <p style='margin-top: 10px; font-size: 13px; color: #999; font-family: Inter, sans-serif;'>
+                Showing results for "{{ keyword }}" —
                 <a href='/devotionals' style='color: #9B8EC4;'>Clear search</a>
             </p>
         {% endif %}
@@ -24,20 +24,39 @@
 
     {% if devotionals %}
         {% for devotional in devotionals %}
-            <div class='devotional-card' style='padding: 15px 20px;'>
-                <div style='display: flex; justify-content: space-between; align-items: center;'>
-                    <div>
-                        <h2 style='margin-bottom: 5px;'>{{ devotional.title }}</h2>
-                        <p style='color: #999; font-size: 13px; margin: 0;'>{{ devotional.date }}</p>
-                    </div>
-                    <a href='/devotionals/{{ devotional.id }}'
-                        style='color: #9B8EC4; font-weight: bold; text-decoration: none; font-size: 20px;'>→</a>
+            <a href='/devotionals/{{ devotional.id }}' style='text-decoration: none;'>
+                <div style='background: linear-gradient(135deg, #5C2A0E 0%, #9B4520 50%, #7A3318 100%);
+                    border-radius: 12px; padding: 20px; margin-bottom: 15px;
+                    box-shadow: 0 4px 15px rgba(92, 42, 14, 0.3);'>
+                    <p style='color: #F5C4A0; font-size: 10px; letter-spacing: 2px;
+                        text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+                        {{ devotional.date }}
+                    </p>
+                    <h2 style='color: white; font-family: Lora, Georgia, serif;
+                        font-size: 18px; margin-bottom: 6px; line-height: 1.4;'>
+                        {{ devotional.title }}
+                    </h2>
+                    <p style='color: #F5C4A0; font-style: italic; font-size: 13px;
+                        font-family: Lora, Georgia, serif; margin-bottom: 10px;'>
+                        {{ devotional.verse }}
+                    </p>
+                    <p style='color: #FFF0E8; font-size: 13px; line-height: 1.7;
+                        font-family: Inter, sans-serif; margin-bottom: 12px;'>
+                        {{ devotional.explanation[:100] }}...
+                    </p>
+                    <p style='color: #F5C4A0; font-weight: bold;
+                        font-family: Inter, sans-serif; font-size: 13px; margin: 0;'>
+                        Read more →
+                    </p>
                 </div>
-            </div>
+            </a>
         {% endfor %}
     {% else %}
-        <div class='devotional-card'>
-            <p>No devotionals found for "{{ keyword }}". Try a different search term.</p>
+        <div style='background: linear-gradient(135deg, #5C2A0E 0%, #9B4520 50%, #7A3318 100%);
+            border-radius: 12px; padding: 20px;'>
+            <p style='color: #FFF0E8; font-family: Inter, sans-serif;'>
+                No devotionals found. Check back soon.
+            </p>
         </div>
     {% endif %}
 {% endblock %}
