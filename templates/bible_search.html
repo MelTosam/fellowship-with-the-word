@@ -8,20 +8,29 @@
         border-radius: 12px; padding: 20px; margin: 15px 0 20px 0;'>
         <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
             text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
-            Search Results
+            The Holy Scriptures
         </p>
         <h2 style='color: white; font-family: Lora, Georgia, serif;
-            font-size: 20px; margin: 0;'>{{ reference }}</h2>
+            font-size: 20px; margin: 0;'>Bible Search</h2>
     </div>
 
-    <div class='devotional-card' style='margin-bottom: 20px;'>
+    <div style='background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(123, 111, 160, 0.12);'>
         <form method='GET' action='/bible/search'>
+            <p style='font-weight: 600; margin-bottom: 8px; font-family: Inter, sans-serif;
+                color: #2D2640;'>Search a verse or chapter</p>
+            <p style='font-size: 13px; color: #777; margin-bottom: 12px;
+                font-family: Inter, sans-serif;'>
+                Try "John 3:16" or "Romans 8" or "Psalms 23"
+            </p>
             <input type='text' name='reference' value='{{ reference }}'
+                placeholder='e.g. John 3:16'
                 style='width: 75%; padding: 10px; border: 2px solid #9B8EC4;
                 border-radius: 4px; font-size: 15px; font-family: Inter, sans-serif;'>
             <button type='submit'
                 style='background-color: #9B8EC4; color: white; padding: 10px 18px;
-                border: none; border-radius: 4px; font-size: 15px; cursor: pointer; margin-left: 5px;'>
+                border: none; border-radius: 4px; font-size: 15px;
+                cursor: pointer; margin-left: 5px;'>
                 Search
             </button>
         </form>
@@ -31,7 +40,8 @@
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
             border-radius: 12px; padding: 25px; margin-bottom: 20px;'>
             <p style='color: #C9A84C; font-size: 12px; font-weight: 600;
-                font-family: Inter, sans-serif; margin-bottom: 15px;'>
+                font-family: Inter, sans-serif; margin-bottom: 15px;
+                letter-spacing: 1px; text-transform: uppercase;'>
                 {{ verse_reference }}
             </p>
             {% for verse in verses %}
@@ -49,6 +59,18 @@
     {% if error %}
         <div style='background: #3D1515; border-radius: 8px; padding: 15px; margin-top: 15px;'>
             <p style='color: #F5C4A0; font-family: Inter, sans-serif; margin: 0;'>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    {% if not verses and not error %}
+        <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
+            border-radius: 12px; padding: 25px; text-align: center;'>
+            <p style='color: #B8C8D8; font-family: Lora, Georgia, serif;
+                font-size: 16px; font-style: italic; margin: 0;'>
+                Your word is a lamp to my feet and a light to my path
+            </p>
+            <p style='color: #C9A84C; font-family: Inter, sans-serif;
+                font-size: 13px; margin-top: 10px;'>Psalm 119:105</p>
         </div>
     {% endif %}
 
