@@ -1,21 +1,29 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
-    <h1>Bible</h1>
-
-    {% if not selected_book %}
-        <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 50%, #0D2137 100%);
-            border-radius: 12px; padding: 20px; margin-bottom: 20px;'>
-            <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
-                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
+    <div style='background: url("https://images.unsplash.com/photo-1554696468-19f8c7a71ad5?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+        border-radius: 12px; padding: 40px 30px; margin-bottom: 25px; min-height: 220px;
+        display: flex; flex-direction: column; justify-content: flex-end; position: relative;'>
+        <div style='position: absolute; bottom: 0; left: 0; right: 0; top: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 60%);
+            border-radius: 12px;'></div>
+        <div style='position: relative; z-index: 1;'>
+            <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
+                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
                 The Holy Scriptures
             </p>
-            <p style='color: #B8C8D8; font-style: italic; font-family: Lora, Georgia, serif;
-                font-size: 14px; margin: 0;'>
+            <h1 style='color: white; font-family: Lora, Georgia, serif;
+                font-size: 28px; margin-bottom: 10px; border: none; padding: 0; line-height: 1.4;'>
+                Bible
+            </h1>
+            <p style='color: #E8D5B0; font-style: italic; font-family: Lora, Georgia, serif;
+                font-size: 15px; margin: 0;'>
                 Select a book or search a verse directly
             </p>
         </div>
+    </div>
 
+    {% if not selected_book %}
         <div style='background: linear-gradient(135deg, #1A1A2E 0%, #2D2640 100%);
             border-radius: 12px; padding: 20px; margin-bottom: 25px;'>
             <form method='GET' action='/bible/search'>
@@ -70,7 +78,7 @@
 
     {% elif not selected_chapter %}
         <a href='/bible' style='color: #C9A84C; text-decoration: none;
-            font-family: Inter, sans-serif; font-size: 14px;'>Back to all books</a>
+            font-family: Inter, sans-serif; font-size: 14px;'>← Back to all books</a>
 
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
             border-radius: 12px; padding: 20px; margin: 15px 0 20px 0;'>
@@ -118,7 +126,7 @@
 
     {% else %}
         <a href='/bible?book={{ selected_book }}' style='color: #C9A84C; text-decoration: none;
-            font-family: Inter, sans-serif; font-size: 14px;'>Back to {{ selected_book }}</a>
+            font-family: Inter, sans-serif; font-size: 14px;'>← Back to {{ selected_book }}</a>
 
         <div style='background: linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%);
             border-radius: 12px; padding: 20px; margin: 15px 0 20px 0;'>
@@ -167,14 +175,14 @@
                         style='flex: 1; background: #2D2640; color: white; text-align: center;
                         padding: 12px; border-radius: 8px; text-decoration: none;
                         font-family: Inter, sans-serif; font-size: 14px;'>
-                        Previous Chapter
+                        ← Previous Chapter
                     </a>
                 {% endif %}
                 <a href='/bible?book={{ selected_book }}&chapter={{ selected_chapter|int + 1 }}'
                     style='flex: 1; background: #2D2640; color: white; text-align: center;
                     padding: 12px; border-radius: 8px; text-decoration: none;
                     font-family: Inter, sans-serif; font-size: 14px;'>
-                    Next Chapter
+                    Next Chapter →
                 </a>
             </div>
         {% endif %}
