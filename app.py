@@ -3,6 +3,7 @@ import datetime
 import requests
 import os
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 
@@ -154,6 +155,18 @@ def get_latest_sermon(sermons):
 def get_placeholder(db_type):
     return '%s' if db_type == 'postgresql' else '?'
 
+def get_current_user():
+    if 'user_id' in session:
+        conn, db_type = get_db_connection()
+        cursor = conn.cursor()
+        ph = get_placeholder(db_type)
+        cursor.execute(f'SELECT id, name, email FROM users WHERE id = {ph}', (session['user_id'],))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return {'id': row[0], 'name': row[1], 'email': row[2]}
+    return None
+
 @app.route('/')
 def home():
     devotionals = load_devotionals()
@@ -162,11 +175,13 @@ def home():
     yesterdays_devotional = get_yesterdays_devotional(devotionals)
     latest_sermon = get_latest_sermon(sermons)
     word_of_the_day = get_word_of_the_day()
+    current_user = get_current_user()
     return render_template('home.html',
         devotional=todays_devotional,
         yesterday=yesterdays_devotional,
         latest_sermon=latest_sermon,
-        word_of_the_day=word_of_the_day)
+        word_of_the_day=word_of_the_day,
+        current_user=current_user)
 
 @app.route('/devotionals')
 def devotionals_page():
@@ -240,10 +255,6 @@ def contact():
 def give():
     return render_template('give.html')
 
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
-
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
@@ -256,11 +267,9 @@ def bible():
     verse_reference = None
     error = None
     chapters = []
-
     if selected_book:
         chapter_count = BOOK_CHAPTERS.get(selected_book, 0)
         chapters = list(range(1, chapter_count + 1))
-
     if selected_book and selected_chapter:
         try:
             reference = f'{selected_book}+{selected_chapter}'
@@ -273,7 +282,6 @@ def bible():
                 verse_reference = data.get('reference', '')
         except:
             error = 'Something went wrong. Please try again.'
-
     return render_template('bible.html',
         verses=verses,
         verse_reference=verse_reference,
@@ -290,7 +298,6 @@ def bible_search():
     verses = []
     verse_reference = None
     error = None
-
     if reference:
         try:
             response = requests.get(f'https://bible-api.com/{reference}')
@@ -302,12 +309,83 @@ def bible_search():
                 verse_reference = data.get('reference', '')
         except:
             error = 'Something went wrong. Please try again.'
-
     return render_template('bible_search.html',
         verses=verses,
         verse_reference=verse_reference,
         error=error,
         reference=reference)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    error = None
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if not name or not email or not password:
+            error = 'Please fill in all fields.'
+        else:
+            conn, db_type = get_db_connection()
+            cursor = conn.cursor()
+            ph = get_placeholder(db_type)
+            cursor.execute(f'SELECT id FROM users WHERE email = {ph}', (email,))
+            existing = cursor.fetchone()
+
+            if existing:
+                error = 'An account with this email already exists.'
+                conn.close()
+            else:
+                password_hash = generate_password_hash(password)
+                created_at = datetime.date.today().strftime('%d-%m-%Y')
+                cursor.execute(
+                    f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph}) RETURNING id' if db_type == 'postgresql' else f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph})',
+                    (name, email, password_hash, created_at)
+                )
+                if db_type == 'postgresql':
+                    new_id = cursor.fetchone()[0]
+                else:
+                    new_id = cursor.lastrowid
+                conn.commit()
+                conn.close()
+                session['user_id'] = new_id
+                return redirect(url_for('profile'))
+
+    return render_template('signup.html', error=error)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        conn, db_type = get_db_connection()
+        cursor = conn.cursor()
+        ph = get_placeholder(db_type)
+        cursor.execute(f'SELECT id, password_hash FROM users WHERE email = {ph}', (email,))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row and check_password_hash(row[1], password):
+            session['user_id'] = row[0]
+            return redirect(url_for('profile'))
+        else:
+            error = 'Incorrect email or password.'
+
+    return render_template('login.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('home'))
+
+@app.route('/profile')
+def profile():
+    current_user = get_current_user()
+    if not current_user:
+        return redirect(url_for('login'))
+    return render_template('profile.html', current_user=current_user)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():

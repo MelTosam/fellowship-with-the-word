@@ -1,0 +1,39 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create Account</h1>
+
+    <div class='devotional-card'>
+        {% if error %}
+            <p style='color: #C0392B; font-weight: 600; margin-bottom: 15px;'>{{ error }}</p>
+        {% endif %}
+        <form method='POST'>
+            <p style='font-weight: 600; margin-bottom: 6px;'>Full Name</p>
+            <input type='text' name='name' placeholder='Enter your name'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
+                font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
+
+            <p style='font-weight: 600; margin-bottom: 6px;'>Email</p>
+            <input type='email' name='email' placeholder='Enter your email'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
+                font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
+
+            <p style='font-weight: 600; margin-bottom: 6px;'>Password</p>
+            <input type='password' name='password' placeholder='Choose a password'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
+                font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
+
+            <button type='submit'
+                style='background-color: #C9A84C; color: #0F0F14; padding: 12px 30px;
+                border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: 700;'>
+                Create Account
+            </button>
+        </form>
+        <p style='margin-top: 15px; font-size: 14px;'>
+            Already have an account? <a href='/login'>Log in</a>
+        </p>
+    </div>
+{% endblock %}
