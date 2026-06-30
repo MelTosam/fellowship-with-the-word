@@ -5,21 +5,22 @@ sermons = [
 
       {"title": "Righteousness by faith",
        "description": "We have become the righteousness of God in Christ",
-       "date": "24-06-2026"},
+       "date": "30-06-2026"},
 
        {"title": "Faith and works",
         "description": "true faith produces works that glorify Christ",
         "date": "22-06-2026"}
 ]
-def sermons_keyword(sermons, keyword):
-    result = []
-    for sermon in sermons:
-        if keyword.lower() in sermon["title"].lower() or keyword.lower() in sermon["description"].lower():
-            result.append(sermon)
-    return result
 
-result = sermons_keyword(sermons, "God")
-for sermon in result:
-    print("title:", sermon["title"])
-    print("description:", sermon["description"])
-    print("---")              
+def latest_sermon(sermons):
+    latest = sermons[0]
+    for sermon in sermons:
+        if sermon["date"] > latest["date"]:
+            latest = sermon
+    return latest    
+result = latest_sermon(sermons)
+print("title:", result["title"])
+print("description:", result["description"])
+print("date:", result["date"])
+
+            
