@@ -167,6 +167,16 @@ def get_current_user():
             return {'id': row[0], 'name': row[1], 'email': row[2]}
     return None
 
+def is_favourited(user_id, item_type, item_id):
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+    cursor.execute(f'SELECT id FROM favourites WHERE user_id = {ph} AND item_type = {ph} AND item_id = {ph}',
+        (user_id, item_type, item_id))
+    row = cursor.fetchone()
+    conn.close()
+    return row is not None
+
 @app.route('/')
 def home():
     devotionals = load_devotionals()
@@ -209,7 +219,12 @@ def devotional_detail(devotional_id):
             'explanation': row[3],
             'date': row[4]
         }
-        return render_template('devotional_detail.html', devotional=devotional)
+        current_user = get_current_user()
+        favourited = False
+        if current_user:
+            favourited = is_favourited(current_user['id'], 'devotional', devotional_id)
+        return render_template('devotional_detail.html', devotional=devotional,
+            current_user=current_user, favourited=favourited)
     else:
         return 'Devotional not found', 404
 
@@ -239,9 +254,42 @@ def sermon_detail(sermon_id):
             'description': row[3],
             'video_url': row[4]
         }
-        return render_template('sermon_detail.html', sermon=sermon)
+        current_user = get_current_user()
+        favourited = False
+        if current_user:
+            favourited = is_favourited(current_user['id'], 'sermon', sermon_id)
+        return render_template('sermon_detail.html', sermon=sermon,
+            current_user=current_user, favourited=favourited)
     else:
         return 'Sermon not found', 404
+
+@app.route('/favourite/<item_type>/<int:item_id>', methods=['POST'])
+def toggle_favourite(item_type, item_id):
+    current_user = get_current_user()
+    if not current_user:
+        return redirect(url_for('login'))
+
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+
+    cursor.execute(f'SELECT id FROM favourites WHERE user_id = {ph} AND item_type = {ph} AND item_id = {ph}',
+        (current_user['id'], item_type, item_id))
+    existing = cursor.fetchone()
+
+    if existing:
+        cursor.execute(f'DELETE FROM favourites WHERE id = {ph}', (existing[0],))
+    else:
+        cursor.execute(f'INSERT INTO favourites (user_id, item_type, item_id) VALUES ({ph}, {ph}, {ph})',
+            (current_user['id'], item_type, item_id))
+
+    conn.commit()
+    conn.close()
+
+    if item_type == 'devotional':
+        return redirect(url_for('devotional_detail', devotional_id=item_id))
+    else:
+        return redirect(url_for('sermon_detail', sermon_id=item_id))
 
 @app.route('/about')
 def about():
@@ -338,13 +386,17 @@ def signup():
             else:
                 password_hash = generate_password_hash(password)
                 created_at = datetime.date.today().strftime('%d-%m-%Y')
-                cursor.execute(
-                    f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph}) RETURNING id' if db_type == 'postgresql' else f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph})',
-                    (name, email, password_hash, created_at)
-                )
                 if db_type == 'postgresql':
+                    cursor.execute(
+                        f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph}) RETURNING id',
+                        (name, email, password_hash, created_at)
+                    )
                     new_id = cursor.fetchone()[0]
                 else:
+                    cursor.execute(
+                        f'INSERT INTO users (name, email, password_hash, created_at) VALUES ({ph}, {ph}, {ph}, {ph})',
+                        (name, email, password_hash, created_at)
+                    )
                     new_id = cursor.lastrowid
                 conn.commit()
                 conn.close()
@@ -385,7 +437,28 @@ def profile():
     current_user = get_current_user()
     if not current_user:
         return redirect(url_for('login'))
-    return render_template('profile.html', current_user=current_user)
+
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+
+    cursor.execute(f'SELECT item_id FROM favourites WHERE user_id = {ph} AND item_type = {ph}',
+        (current_user['id'], 'devotional'))
+    fav_devotional_ids = [row[0] for row in cursor.fetchall()]
+
+    cursor.execute(f'SELECT item_id FROM favourites WHERE user_id = {ph} AND item_type = {ph}',
+        (current_user['id'], 'sermon'))
+    fav_sermon_ids = [row[0] for row in cursor.fetchall()]
+    conn.close()
+
+    all_devotionals = load_devotionals()
+    favourite_devotionals = [d for d in all_devotionals if d['id'] in fav_devotional_ids]
+
+    all_sermons = load_sermons()
+    favourite_sermons = [s for s in all_sermons if s['id'] in fav_sermon_ids]
+
+    return render_template('profile.html', current_user=current_user,
+        favourite_devotionals=favourite_devotionals, favourite_sermons=favourite_sermons)
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():

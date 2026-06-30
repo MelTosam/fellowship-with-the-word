@@ -17,15 +17,39 @@
         </p>
     </div>
 
-    <div class='devotional-card'>
-        <h2>Coming Soon</h2>
-        <p>We are building more features for your personal space. Soon you will be able to:</p>
-        <p>— Save your favourite devotionals and sermons</p>
-        <p>— Track your Bible reading progress</p>
-        <p>— Set daily devotional reminders</p>
-    </div>
+    <h2 class='section-title'>Saved Devotionals</h2>
+    {% if favourite_devotionals %}
+        {% for devotional in favourite_devotionals %}
+            <a href='/devotionals/{{ devotional.id }}' style='text-decoration: none;'>
+                <div class='devotional-card'>
+                    <h2 style='margin-bottom: 5px;'>{{ devotional.title }}</h2>
+                    <p style='color: #9B8EC4; font-size: 13px; margin: 0;'>{{ devotional.verse }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class='devotional-card'>
+            <p>You haven't saved any devotionals yet.</p>
+        </div>
+    {% endif %}
 
-    <div class='devotional-card'>
+    <h2 class='section-title' style='margin-top: 25px;'>Saved Sermons</h2>
+    {% if favourite_sermons %}
+        {% for sermon in favourite_sermons %}
+            <a href='/sermons/{{ sermon.id }}' style='text-decoration: none;'>
+                <div class='devotional-card'>
+                    <h2 style='margin-bottom: 5px;'>{{ sermon.title }}</h2>
+                    <p style='color: #9B8EC4; font-size: 13px; margin: 0;'>{{ sermon.date }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class='devotional-card'>
+            <p>You haven't saved any sermons yet.</p>
+        </div>
+    {% endif %}
+
+    <div class='devotional-card' style='margin-top: 25px;'>
         <a href='/logout' style='color: #C9A84C; font-weight: 600;'>Log Out</a>
     </div>
 {% endblock %}

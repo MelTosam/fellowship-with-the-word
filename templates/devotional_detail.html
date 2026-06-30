@@ -16,14 +16,28 @@
                 {{ devotional.title }}
             </h1>
             <p style='color: #E8D5B0; font-style: italic; font-family: Lora, Georgia, serif;
-                font-size: 16px; margin-bottom: 0;'>{{ devotional.verse }}</p>
+                font-size: 16px; margin-bottom: 15px;'>{{ devotional.verse }}</p>
+
+            {% if current_user %}
+                <form method='POST' action='/favourite/devotional/{{ devotional.id }}'>
+                    <button type='submit'
+                        style='background: {% if favourited %}#C9A84C{% else %}transparent{% endif %};
+                        color: {% if favourited %}#0F0F14{% else %}#C9A84C{% endif %};
+                        border: 1px solid #C9A84C; padding: 6px 16px; border-radius: 20px;
+                        font-size: 13px; cursor: pointer; font-family: Inter, sans-serif; font-weight: 600;'>
+                        {% if favourited %}★ Saved{% else %}☆ Save{% endif %}
+                    </button>
+                </form>
+            {% else %}
+                <a href='/login' style='color: #C9A84C; font-size: 13px;'>Log in to save this devotional</a>
+            {% endif %}
         </div>
 
-        <div style='background: linear-gradient(rgba(20, 15, 30, 0.82), rgba(25, 18, 35, 0.82)), url("https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+        <div style='background: linear-gradient(rgba(248, 240, 225, 0.96), rgba(245, 236, 218, 0.96)), url("https://images.unsplash.com/photo-1524492514790-8310bf594ea4?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
             border-radius: 12px; padding: 25px; margin-bottom: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.3);'>
+            box-shadow: 0 2px 12px rgba(139, 85, 0, 0.15);'>
             <p style='white-space: pre-wrap; line-height: 2; font-size: 16px;
-                font-family: Lora, Georgia, serif; color: #F0EDE8;'>{{ devotional.explanation }}</p>
+                font-family: Lora, Georgia, serif; color: #1A0800;'>{{ devotional.explanation }}</p>
         </div>
 
         <div style='text-align: center; margin-top: 20px;'>
