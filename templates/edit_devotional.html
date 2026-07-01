@@ -1,7 +1,7 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
-    <h1>Add Devotional</h1>
+    <h1>Edit Devotional</h1>
 
     {% if message %}
         <div style='background: #1A3A1A; border-radius: 8px; padding: 15px; margin-bottom: 20px;'>
@@ -12,26 +12,26 @@
     <div class='devotional-card'>
         <form method='POST'>
             <p style='font-weight: 600; margin-bottom: 6px; color: #F0EDE8;'>Title</p>
-            <input type='text' name='title' placeholder='Devotional title'
+            <input type='text' name='title' value='{{ devotional.title }}'
                 style='width: 100%; padding: 10px; margin-bottom: 15px;
                 border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
                 font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
 
             <p style='font-weight: 600; margin-bottom: 6px; color: #F0EDE8;'>Verse</p>
-            <input type='text' name='verse' placeholder='e.g. Romans 8:1'
+            <input type='text' name='verse' value='{{ devotional.verse }}'
                 style='width: 100%; padding: 10px; margin-bottom: 15px;
                 border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
                 font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
 
             <p style='font-weight: 600; margin-bottom: 6px; color: #F0EDE8;'>Explanation</p>
-            <textarea name='explanation' rows='12' placeholder='Write your devotional here...'
+            <textarea name='explanation' rows='12'
                 style='width: 100%; padding: 10px; margin-bottom: 15px;
                 border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
                 font-size: 15px; background: #1A1A24; color: #F0EDE8;
-                font-family: Inter, sans-serif; line-height: 1.8;'></textarea>
+                font-family: Inter, sans-serif; line-height: 1.8;'>{{ devotional.explanation }}</textarea>
 
             <p style='font-weight: 600; margin-bottom: 6px; color: #F0EDE8;'>Date (DD-MM-YYYY)</p>
-            <input type='text' name='date' placeholder='e.g. 01-08-2026'
+            <input type='text' name='date' value='{{ devotional.date }}'
                 style='width: 100%; padding: 10px; margin-bottom: 15px;
                 border: 1px solid rgba(201, 168, 76, 0.4); border-radius: 4px;
                 font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
@@ -39,29 +39,11 @@
             <button type='submit'
                 style='background-color: #C9A84C; color: #0F0F14; padding: 12px 30px;
                 border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: 700;'>
-                Save Devotional
+                Save Changes
             </button>
         </form>
-    </div>
-
-    <h2 class='section-title' style='margin-top: 30px;'>Existing Devotionals</h2>
-    <p style='font-size: 13px; color: rgba(200,196,190,0.6); margin-bottom: 15px;'>Click Edit to update any devotional.</p>
-
-    {% for devotional in devotionals %}
-        <div style='background: #1A1A24; border-radius: 8px; padding: 15px; margin-bottom: 10px;
-            border-left: 3px solid #C9A84C; display: flex; justify-content: space-between; align-items: center;'>
-            <div>
-                <p style='color: #C9A84C; font-size: 11px; font-family: Inter, sans-serif;
-                    margin-bottom: 4px;'>{{ devotional.date }}</p>
-                <p style='color: #F0EDE8; font-family: Lora, Georgia, serif;
-                    font-size: 15px; margin: 0;'>{{ devotional.title }}</p>
-            </div>
-            <a href='/edit-devotional/{{ devotional.id }}'
-                style='background: #2D2640; color: #9B8EC4; padding: 8px 16px;
-                border-radius: 4px; text-decoration: none; font-family: Inter, sans-serif;
-                font-size: 13px; font-weight: 600; white-space: nowrap; margin-left: 15px;'>
-                Edit
-            </a>
+        <div style='margin-top: 15px;'>
+            <a href='/add-devotional' style='color: #9B8EC4; font-size: 14px;'>← Back to Add Devotional</a>
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

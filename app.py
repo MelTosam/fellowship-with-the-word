@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -268,24 +268,19 @@ def toggle_favourite(item_type, item_id):
     current_user = get_current_user()
     if not current_user:
         return redirect(url_for('login'))
-
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     ph = get_placeholder(db_type)
-
     cursor.execute(f'SELECT id FROM favourites WHERE user_id = {ph} AND item_type = {ph} AND item_id = {ph}',
         (current_user['id'], item_type, item_id))
     existing = cursor.fetchone()
-
     if existing:
         cursor.execute(f'DELETE FROM favourites WHERE id = {ph}', (existing[0],))
     else:
         cursor.execute(f'INSERT INTO favourites (user_id, item_type, item_id) VALUES ({ph}, {ph}, {ph})',
             (current_user['id'], item_type, item_id))
-
     conn.commit()
     conn.close()
-
     if item_type == 'devotional':
         return redirect(url_for('devotional_detail', devotional_id=item_id))
     else:
@@ -370,7 +365,6 @@ def signup():
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
-
         if not name or not email or not password:
             error = 'Please fill in all fields.'
         else:
@@ -379,7 +373,6 @@ def signup():
             ph = get_placeholder(db_type)
             cursor.execute(f'SELECT id FROM users WHERE email = {ph}', (email,))
             existing = cursor.fetchone()
-
             if existing:
                 error = 'An account with this email already exists.'
                 conn.close()
@@ -402,7 +395,6 @@ def signup():
                 conn.close()
                 session['user_id'] = new_id
                 return redirect(url_for('profile'))
-
     return render_template('signup.html', error=error)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -411,20 +403,17 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-
         conn, db_type = get_db_connection()
         cursor = conn.cursor()
         ph = get_placeholder(db_type)
         cursor.execute(f'SELECT id, password_hash FROM users WHERE email = {ph}', (email,))
         row = cursor.fetchone()
         conn.close()
-
         if row and check_password_hash(row[1], password):
             session['user_id'] = row[0]
             return redirect(url_for('profile'))
         else:
             error = 'Incorrect email or password.'
-
     return render_template('login.html', error=error)
 
 @app.route('/logout')
@@ -437,26 +426,20 @@ def profile():
     current_user = get_current_user()
     if not current_user:
         return redirect(url_for('login'))
-
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     ph = get_placeholder(db_type)
-
     cursor.execute(f'SELECT item_id FROM favourites WHERE user_id = {ph} AND item_type = {ph}',
         (current_user['id'], 'devotional'))
     fav_devotional_ids = [row[0] for row in cursor.fetchall()]
-
     cursor.execute(f'SELECT item_id FROM favourites WHERE user_id = {ph} AND item_type = {ph}',
         (current_user['id'], 'sermon'))
     fav_sermon_ids = [row[0] for row in cursor.fetchall()]
     conn.close()
-
     all_devotionals = load_devotionals()
     favourite_devotionals = [d for d in all_devotionals if d['id'] in fav_devotional_ids]
-
     all_sermons = load_sermons()
     favourite_sermons = [s for s in all_sermons if s['id'] in fav_sermon_ids]
-
     return render_template('profile.html', current_user=current_user,
         favourite_devotionals=favourite_devotionals, favourite_sermons=favourite_sermons)
 
@@ -497,7 +480,43 @@ def add_devotional():
         conn.commit()
         conn.close()
         message = 'Devotional saved successfully.'
-    return render_template('add_devotional.html', message=message)
+    devotionals = load_devotionals()
+        return render_template('add_devotional.html', message=message, devotionals=devotionals)
+
+@app.route('/edit-devotional/<int:devotional_id>', methods=['GET', 'POST'])
+def edit_devotional(devotional_id):
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+    message = None
+    if request.method == 'POST':
+        title = request.form.get('title')
+        verse = request.form.get('verse')
+        explanation = request.form.get('explanation')
+        date = request.form.get('date')
+        cursor.execute(
+            f'UPDATE devotionals SET title = {ph}, verse = {ph}, explanation = {ph}, date = {ph} WHERE id = {ph}',
+            (title, verse, explanation, date, devotional_id)
+        )
+        conn.commit()
+        conn.close()
+        message = 'Devotional updated successfully.'
+        return render_template('edit_devotional.html', devotional={
+            'id': devotional_id, 'title': title, 'verse': verse,
+            'explanation': explanation, 'date': date
+        }, message=message)
+    cursor.execute(f'SELECT id, title, verse, explanation, date FROM devotionals WHERE id = {ph}', (devotional_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        devotional = {
+            'id': row[0], 'title': row[1], 'verse': row[2],
+            'explanation': row[3], 'date': row[4]
+        }
+        return render_template('edit_devotional.html', devotional=devotional, message=message)
+    return 'Devotional not found', 404
 
 @app.route('/add-sermon', methods=['GET', 'POST'])
 def add_sermon():
