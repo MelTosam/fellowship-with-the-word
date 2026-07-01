@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -481,7 +481,7 @@ def add_devotional():
         conn.close()
         message = 'Devotional saved successfully.'
     devotionals = load_devotionals()
-        return render_template('add_devotional.html', message=message, devotionals=devotionals)
+    return render_template('add_devotional.html', message=message, devotionals=devotionals)
 
 @app.route('/edit-devotional/<int:devotional_id>', methods=['GET', 'POST'])
 def edit_devotional(devotional_id):
