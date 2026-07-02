@@ -115,6 +115,20 @@ def load_devotionals():
         devotionals.append(devotional)
     return devotionals
 
+def load_published_devotionals():
+    today = datetime.date.today().strftime('%d-%m-%Y')
+    all_devotionals = load_devotionals()
+    published = []
+    for d in all_devotionals:
+        try:
+            d_date = datetime.datetime.strptime(d['date'], '%d-%m-%Y').date()
+            if d_date <= datetime.date.today():
+                published.append(d)
+        except:
+            pass
+    published.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%d-%m-%Y'), reverse=True)
+    return published
+
 def load_sermons():
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
@@ -195,7 +209,7 @@ def home():
 
 @app.route('/devotionals')
 def devotionals_page():
-    devotionals = load_devotionals()
+    devotionals = load_published_devotionals()
     keyword = request.args.get('search', '')
     if keyword:
         devotionals = [d for d in devotionals if
@@ -481,6 +495,7 @@ def add_devotional():
         conn.close()
         message = 'Devotional saved successfully.'
     devotionals = load_devotionals()
+    devotionals.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%d-%m-%Y'))
     return render_template('add_devotional.html', message=message, devotionals=devotionals)
 
 @app.route('/edit-devotional/<int:devotional_id>', methods=['GET', 'POST'])
@@ -517,6 +532,18 @@ def edit_devotional(devotional_id):
         }
         return render_template('edit_devotional.html', devotional=devotional, message=message)
     return 'Devotional not found', 404
+
+@app.route('/delete-devotional/<int:devotional_id>', methods=['POST'])
+def delete_devotional(devotional_id):
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+    cursor.execute(f'DELETE FROM devotionals WHERE id = {ph}', (devotional_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('add_devotional'))
 
 @app.route('/add-sermon', methods=['GET', 'POST'])
 def add_sermon():
