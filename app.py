@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -495,7 +495,7 @@ def add_devotional():
         conn.close()
         message = 'Devotional saved successfully.'
     devotionals = load_devotionals()
-    devotionals.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%d-%m-%Y'))
+    devotionals.sort(key=lambda x: datetime.datetime.strptime(x['date'], '%d-%m-%Y') if x['date'] and len(x['date']) == 10 else datetime.datetime.min)
     return render_template('add_devotional.html', message=message, devotionals=devotionals)
 
 @app.route('/edit-devotional/<int:devotional_id>', methods=['GET', 'POST'])
