@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -9,6 +9,10 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=30)
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 WORD_OF_THE_DAY = [
     {"verse": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."},
@@ -402,6 +406,7 @@ def signup():
                     new_id = cursor.lastrowid
                 conn.commit()
                 conn.close()
+                session.permanent = True
                 session['user_id'] = new_id
                 return redirect(url_for('profile'))
     return render_template('signup.html', error=error)
@@ -419,6 +424,7 @@ def login():
         row = cursor.fetchone()
         conn.close()
         if row and check_password_hash(row[1], password):
+            session.permanent = True
             session['user_id'] = row[0]
             return redirect(url_for('profile'))
         else:
