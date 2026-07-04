@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -116,7 +116,6 @@ def load_devotionals():
     return devotionals
 
 def load_published_devotionals():
-    today = datetime.date.today().strftime('%d-%m-%Y')
     all_devotionals = load_devotionals()
     published = []
     for d in all_devotionals:
@@ -308,10 +307,6 @@ def about():
 def contact():
     return render_template('contact.html')
 
-@app.route('/give')
-def give():
-    return render_template('give.html')
-
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
@@ -434,6 +429,31 @@ def login():
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('home'))
+
+@app.route('/delete-account', methods=['GET', 'POST'])
+def delete_account():
+    current_user = get_current_user()
+    if not current_user:
+        return redirect(url_for('login'))
+    error = None
+    if request.method == 'POST':
+        password = request.form.get('password')
+        conn, db_type = get_db_connection()
+        cursor = conn.cursor()
+        ph = get_placeholder(db_type)
+        cursor.execute(f'SELECT password_hash FROM users WHERE id = {ph}', (current_user['id'],))
+        row = cursor.fetchone()
+        if row and check_password_hash(row[0], password):
+            cursor.execute(f'DELETE FROM favourites WHERE user_id = {ph}', (current_user['id'],))
+            cursor.execute(f'DELETE FROM users WHERE id = {ph}', (current_user['id'],))
+            conn.commit()
+            conn.close()
+            session.pop('user_id', None)
+            return redirect(url_for('home'))
+        else:
+            error = 'Incorrect password. Account not deleted.'
+            conn.close()
+    return render_template('delete_account.html', current_user=current_user, error=error)
 
 @app.route('/profile')
 def profile():
