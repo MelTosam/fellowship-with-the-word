@@ -1,0 +1,55 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <div style='background: linear-gradient(rgba(80, 10, 10, 0.75), rgba(80, 10, 10, 0.80));
+        border-radius: 12px; padding: 25px; margin-bottom: 20px;'>
+        <p style='color: #FFB3B3; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
+            Danger Zone
+        </p>
+        <h1 style='color: white; font-family: Lora, Georgia, serif;
+            font-size: 24px; margin-bottom: 10px; border: none; padding: 0;'>
+            Delete Account
+        </h1>
+        <p style='color: #FFB3B3; font-family: Inter, sans-serif; font-size: 14px; margin: 0;'>
+            This action is permanent and cannot be undone.
+        </p>
+    </div>
+
+    <div class='devotional-card'>
+        <h2>Are you sure?</h2>
+        <p>Deleting your account will permanently remove:</p>
+        <p>— Your profile and login details</p>
+        <p>— All your saved devotionals and sermons</p>
+        <p>This cannot be reversed.</p>
+    </div>
+
+    {% if error %}
+        <div style='background: #3D1515; border-radius: 8px; padding: 15px; margin-bottom: 15px;'>
+            <p style='color: #F5C4A0; font-family: Inter, sans-serif; margin: 0;'>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    <div class='devotional-card'>
+        <form method='POST'>
+            <p style='font-weight: 600; margin-bottom: 6px; color: #F0EDE8;'>
+                Enter your password to confirm
+            </p>
+            <input type='password' name='password' placeholder='Your password'
+                style='width: 100%; padding: 10px; margin-bottom: 15px;
+                border: 1px solid rgba(255, 100, 100, 0.4); border-radius: 4px;
+                font-size: 15px; background: #1A1A24; color: #F0EDE8;'>
+            <button type='submit'
+                style='background-color: #8B0000; color: white; padding: 12px 30px;
+                border: none; border-radius: 4px; font-size: 16px;
+                cursor: pointer; font-weight: 700;'>
+                Permanently Delete My Account
+            </button>
+        </form>
+        <div style='margin-top: 15px;'>
+            <a href='/profile' style='color: #9B8EC4; font-size: 14px;'>
+                Cancel — take me back to my profile
+            </a>
+        </div>
+    </div>
+{% endblock %}
