@@ -1,0 +1,27 @@
+﻿workflows:
+  ios-workflow:
+    name: iOS Build
+    max_build_duration: 60
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: org.fellowshipwiththeword.app
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/ios
+      - name: Sync Capacitor
+        script: |
+          npx cap sync ios
+      - name: Build iOS
+        script: |
+          xcode-project use-profiles
+          xcode-project build-ipa \
+            --workspace ios/App/App.xcworkspace \
+            --scheme App
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
