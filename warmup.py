@@ -1,5 +1,11 @@
-def multiply_numbers(number_one, number_two):
-    return number_one * number_two
+def classify_number(number):
+    if number == 0:
+        return "zero"
+    elif number % 2:
+        return "even"
+    else:
+        return "odd"
 
-result = multiply_numbers(6, 7)
-print(result)
+print(classify_number(0))   
+print(classify_number(5))
+print(classify_number(8))

@@ -1,0 +1,9 @@
+﻿{
+  "appId": "org.fellowshipwiththeword.app",
+  "appName": "Fellowship With The Word",
+  "webDir": "static",
+  "server": {
+    "url": "https://fellowshipwiththeword.org",
+    "cleartext": true
+  }
+}

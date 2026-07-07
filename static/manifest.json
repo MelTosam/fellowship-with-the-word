@@ -1,22 +1,35 @@
 ﻿{
-    "name": "Fellowship With The Word",
-    "short_name": "FWTW",
-    "description": "Networking the world with the light of life",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#2D2640",
-    "theme_color": "#9B8EC4",
-    "orientation": "portrait",
-    "icons": [
-        {
-            "src": "/static/icons/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/static/icons/icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
+  "name": "Fellowship With The Word",
+  "short_name": "FWTW",
+  "id": "org.fellowshipwiththeword.app",
+  "description": "Daily devotionals, Bible reading and sermon teaching to help you grow in the accurate knowledge of God's Word as revealed in Christ Jesus.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F14",
+  "theme_color": "#9B8EC4",
+  "orientation": "portrait",
+  "categories": ["lifestyle", "education"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }
