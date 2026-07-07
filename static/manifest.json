@@ -2,14 +2,23 @@
   "name": "Fellowship With The Word",
   "short_name": "FWTW",
   "id": "org.fellowshipwiththeword.app",
+  "scope": "/",
   "description": "Daily devotionals, Bible reading and sermon teaching to help you grow in the accurate knowledge of God's Word as revealed in Christ Jesus.",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0F0F14",
   "theme_color": "#9B8EC4",
   "orientation": "portrait",
   "categories": ["lifestyle", "education"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
   "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "org.fellowshipwiththeword.app"
+    }
+  ],
   "icons": [
     {
       "src": "/static/icons/icon-192.png",
@@ -30,6 +39,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 }
