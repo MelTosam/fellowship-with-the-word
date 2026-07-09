@@ -1,18 +1,25 @@
-from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_session import Session
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+
+# Store sessions in filesystem so they survive Render restarts
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=30)
+app.config['SESSION_FILE_DIR'] = '/tmp/flask_sessions'
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+Session(app)
 
 WORD_OF_THE_DAY = [
     {"verse": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."},
@@ -433,7 +440,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.clear()
     return redirect(url_for('home'))
 
 @app.route('/delete-account', methods=['GET', 'POST'])
@@ -454,7 +461,7 @@ def delete_account():
             cursor.execute(f'DELETE FROM users WHERE id = {ph}', (current_user['id'],))
             conn.commit()
             conn.close()
-            session.pop('user_id', None)
+            session.clear()
             return redirect(url_for('home'))
         else:
             error = 'Incorrect password. Account not deleted.'
