@@ -1,19 +1,22 @@
-words = ["grace", "redemption", "joy", "justification", "peace", "truth"]
+numbers = [3, 17, 2, 45, 8, 31, 6]
 
-def filter_by_length(words, minimum):
+def filter_above(numbers, minimum):
     result = []
-    for word in words:
-        if len(word) >minimum:
-            result.append(word)
+    for number in numbers:
+        if number > minimum:
+            result.append(number)
     return result
-result = filter_by_length(words, 5)
-print(result)  
+result = filter_above(numbers, 2)
+print(result)
 
-def find_longest(words):
-    winner = words[0]
-    for word in words:
-        if len(word) >len(winner):
-            winner = word
-    return winner
-print(find_longest(words))        
+def find_highest(numbers):
+    winner = numbers[0]
+    for number in numbers:
+        if number > winner:
+            winner = number 
+    return winner 
+
+print(find_highest(numbers))        
+
+
 
