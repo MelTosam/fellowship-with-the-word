@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
+from flask import Flask, render_template, request, send_from_directory, session, redirect, url_for
 import datetime
 import requests
 import os
@@ -606,3 +606,6 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+
