@@ -28,7 +28,7 @@
 
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.4);'>
                 <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
@@ -55,7 +55,7 @@
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;'>
                 <p style='color: rgba(240,237,232,0.7); font-family: Inter, sans-serif;'>No devotional for today. Check back tomorrow.</p>
                 <a href='/devotionals' style='color: #C9A84C; font-weight: bold;'>Browse all devotionals</a>
@@ -67,7 +67,7 @@
             <a href='/devotionals' style='color: #C9A84C; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all</a>
         </div>
         {% if yesterday %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 20px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);'>
                 <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
@@ -92,7 +92,7 @@
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 20px;'>
                 <p style='color: rgba(240,237,232,0.6); font-family: Inter, sans-serif; font-size: 14px;'>
                     Previous devotionals will appear here.
@@ -182,3 +182,4 @@
         setGreeting();
     </script>
 {% endblock %}
+

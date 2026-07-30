@@ -21,6 +21,36 @@ app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 Session(app)
 
+DAILY_IMAGES = [
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1492052722242-2554d0e99e3a?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1743309411498-a0f4f4b96b65?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1779979728057-7cfb791c3b97?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1743253977365-be64df12166d?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1474418397713-7ede21d49118?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=800&q=80",
+]
+
+def get_daily_image():
+    today = datetime.date.today()
+    launch = datetime.date(2026, 8, 1)
+    if today < launch:
+        return DAILY_IMAGES[0]
+    day = today.timetuple().tm_yday
+    return DAILY_IMAGES[day % len(DAILY_IMAGES)]
+
 WORD_OF_THE_DAY = [
     {"verse": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."},
     {"verse": "Romans 8:28", "text": "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."},
@@ -225,7 +255,8 @@ def devotionals_page():
         devotionals = [d for d in devotionals if
                       keyword.lower() in d['title'].lower() or
                       keyword.lower() in d['explanation'].lower()]
-    return render_template('devotionals.html', devotionals=devotionals, keyword=keyword)
+    daily_image = get_daily_image()
+    return render_template('devotionals.html', devotionals=devotionals, keyword=keyword, daily_image=daily_image)
 
 @app.route('/devotionals/<int:devotional_id>')
 def devotional_detail(devotional_id):
@@ -606,6 +637,12 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+
+
+
+
 
 
 
