@@ -1,6 +1,7 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
+
     <a href='/devotionals' style='color: #C9A84C; text-decoration: none; font-family: Inter, sans-serif;
         font-size: 14px;'>← Back to Devotionals</a>
 
@@ -40,6 +41,18 @@
                 font-family: Lora, Georgia, serif; color: #1A0800;'>{{ devotional.explanation }}</p>
         </div>
 
+        {% if current_user %}
+        <div style='text-align: center; margin-top: 25px;'>
+            <a href='/notes/{{ devotional.id }}'
+                style='display: inline-block; background: #2D2640; color: #B8A9D9;
+                padding: 12px 30px; border-radius: 25px; text-decoration: none;
+                font-family: Inter, sans-serif; font-size: 14px; font-weight: 600;
+                border: 1px solid #3D3555; margin-bottom: 15px;'>
+                My Notes
+            </a>
+        </div>
+        {% endif %}
+
         <div style='text-align: center; margin-top: 20px;'>
             <a href='/devotionals'
                 style='color: #C9A84C; font-weight: bold; text-decoration: none;
@@ -50,4 +63,9 @@
         </div>
     </div>
 {% endblock %}
+
+
+
+
+
 

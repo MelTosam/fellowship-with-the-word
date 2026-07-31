@@ -609,6 +609,44 @@ def delete_devotional(devotional_id):
     conn.close()
     return redirect(url_for('add_devotional'))
 
+@app.route('/notes/<int:devotional_id>', methods=['GET', 'POST'])
+def notes(devotional_id):
+    current_user = get_current_user()
+    if not current_user:
+        return redirect(url_for('login'))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    ph = get_placeholder(db_type)
+    if request.method == 'POST':
+        content = request.form.get('content')
+        if content:
+            created_at = datetime.date.today().strftime('%d-%m-%Y')
+            cursor.execute(f'SELECT id FROM notes WHERE user_id = {ph} AND devotional_id = {ph}',
+                (current_user['id'], devotional_id))
+            existing = cursor.fetchone()
+            if existing:
+                cursor.execute(f'UPDATE notes SET content = {ph}, created_at = {ph} WHERE id = {ph}',
+                    (content, created_at, existing[0]))
+            else:
+                cursor.execute(f'INSERT INTO notes (user_id, devotional_id, content, created_at) VALUES ({ph}, {ph}, {ph}, {ph})',
+                    (current_user['id'], devotional_id, content, created_at))
+            conn.commit()
+        conn.close()
+        return redirect(url_for('devotional_detail', devotional_id=devotional_id))
+    cursor.execute(f'SELECT content FROM notes WHERE user_id = {ph} AND devotional_id = {ph}',
+        (current_user['id'], devotional_id))
+    row = cursor.fetchone()
+    conn.close()
+    note = row[0] if row else ''
+    conn2, db_type2 = get_db_connection()
+    cursor2 = conn2.cursor()
+    cursor2.execute(f'SELECT id, title, verse, explanation, date FROM devotionals WHERE id = {ph}', (devotional_id,))
+    row2 = cursor2.fetchone()
+    conn2.close()
+    devotional = {'id': row2[0], 'title': row2[1], 'verse': row2[2], 'explanation': row2[3], 'date': row2[4]}
+    daily_image = get_daily_image()
+    return render_template('notes.html', devotional=devotional, note=note, current_user=current_user, daily_image=daily_image)
+
 @app.route('/add-sermon', methods=['GET', 'POST'])
 def add_sermon():
     if not session.get('admin'):
@@ -637,6 +675,8 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
 
 
 

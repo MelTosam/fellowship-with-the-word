@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+    <a href='/devotionals/{{ devotional.id }}' style='color: #C9A84C; font-family: Inter, sans-serif; font-size: 14px; display: block; margin-bottom: 15px;'>← Back to Devotional</a>
+
+    <div style='background: linear-gradient(rgba(15, 10, 25, 0.75), rgba(20, 15, 35, 0.80)), url("{{ daily_image }}") center/cover no-repeat;
+        border-radius: 12px; padding: 25px; margin-bottom: 20px;'>
+        <p style='color: #B8A9D9; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 8px;'>
+            My Notes
+        </p>
+        <h1 style='color: white; font-family: Lora, Georgia, serif;
+            font-size: 22px; margin-bottom: 5px; border: none; padding: 0;'>
+            {{ devotional.title }}
+        </h1>
+        <p style='color: #C8DBC9; font-style: italic; font-family: Lora, Georgia, serif;
+            font-size: 14px; margin: 0;'>
+            {{ devotional.verse }}
+        </p>
+    </div>
+
+    <div class='devotional-card'>
+        <h2>Your Personal Notes</h2>
+        <p style='color: #9B8EC4; font-size: 13px; margin-bottom: 15px;'>
+            Write your reflections, prayers or insights from this devotional. Only you can see these notes.
+        </p>
+        <form method='POST'>
+            <textarea name='content' placeholder='Write your notes here...'
+                style='width: 100%; min-height: 200px; padding: 12px;
+                background: #1A1A24; color: #F0EDE8; border: 1px solid #2D2640;
+                border-radius: 8px; font-family: Lora, Georgia, serif; font-size: 15px;
+                line-height: 1.6; resize: vertical;'>{{ note }}</textarea>
+            <button type='submit'
+                style='margin-top: 12px; background: #9B8EC4; color: white;
+                padding: 10px 25px; border: none; border-radius: 6px;
+                font-size: 15px; cursor: pointer; font-weight: 600;'>
+                Save Notes
+            </button>
+        </form>
+    </div>
+{% endblock %}

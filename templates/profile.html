@@ -49,6 +49,23 @@
         </div>
     {% endif %}
 
+    <h2 class='section-title' style='margin-top: 25px;'>My Notes</h2>
+    {% if user_notes %}
+        {% for note in user_notes %}
+        <a href='/notes/{{ note.devotional_id }}' style='text-decoration: none;'>
+            <div class='devotional-card'>
+                <h2 style='margin-bottom: 5px;'>{{ note.title }}</h2>
+                <p style='color: #9B8EC4; font-size: 13px; margin-bottom: 8px;'>{{ note.date }}</p>
+                <p style='color: #C8C0D8; font-size: 14px;'>{{ note.content[:100] }}{% if note.content|length > 100 %}...{% endif %}</p>
+            </div>
+        </a>
+        {% endfor %}
+    {% else %}
+        <div class='devotional-card'>
+            <p>You have not written any notes yet. Open a devotional and tap My Notes to start.</p>
+        </div>
+    {% endif %}
+
     <div class='devotional-card' style='margin-top: 25px;'>
         <a href='/logout' style='color: #C9A84C; font-weight: 600;'>Log Out</a>
     </div>
@@ -57,3 +74,5 @@
         <a href='/delete-account' style='color: #8B0000; font-size: 13px;'>Delete my account</a>
     </div>
 {% endblock %}
+
+
