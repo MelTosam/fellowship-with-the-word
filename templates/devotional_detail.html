@@ -41,6 +41,16 @@
                 font-family: Lora, Georgia, serif; color: #1A0800;'>{{ devotional.explanation }}</p>
         </div>
 
+        <div style='text-align: center; margin-top: 20px;'>
+            <a href='https://wa.me/?text=Fellowship%20With%20The%20Word%20-%20{{ devotional.title | urlencode }}%0A{{ request.url }}'
+                target='_blank'
+                style='display: inline-block; background: #25D366; color: white;
+                padding: 10px 20px; border-radius: 25px; text-decoration: none;
+                font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; margin: 5px;'>
+                Share on WhatsApp
+            </a>
+        </div>
+
         {% if current_user %}
         <div style='text-align: center; margin-top: 25px;'>
             <a href='/notes/{{ devotional.id }}'
@@ -63,6 +73,7 @@
         </div>
     </div>
 {% endblock %}
+
 
 
 
