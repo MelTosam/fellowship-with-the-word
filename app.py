@@ -350,6 +350,13 @@ def toggle_favourite(item_type, item_id):
     else:
         return redirect(url_for('sermon_detail', sermon_id=item_id))
 
+@app.route('/welcome')
+def welcome():
+    current_user = get_current_user()
+    if current_user:
+        return redirect(url_for('home'))
+    return render_template('welcome.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -684,6 +691,7 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
 
 
 

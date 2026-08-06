@@ -1,0 +1,45 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+<div style='min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px;'>
+    
+    <img src='/static/icons/icon-192.png' alt='FWTW Logo' 
+        style='width: 100px; height: 100px; border-radius: 22px; margin-bottom: 25px;'>
+    
+    <h1 style='color: white; font-family: Lora, Georgia, serif; font-size: 28px; 
+        margin-bottom: 10px; border: none; padding: 0;'>
+        Fellowship With The Word
+    </h1>
+    
+    <p style='color: #9B8EC4; font-family: Lora, Georgia, serif; font-style: italic;
+        font-size: 16px; margin-bottom: 10px;'>
+        Networking the world with the light of life
+    </p>
+
+    <p style='color: #C8DBC9; font-family: Inter, sans-serif; font-size: 14px; 
+        margin-bottom: 40px; max-width: 300px; line-height: 1.6;'>
+        Grow in the accurate knowledge of God's Word as revealed in Christ Jesus.
+    </p>
+
+    <a href='/signup' style='display: block; width: 100%; max-width: 300px;
+        background: #9B8EC4; color: white; padding: 14px; border-radius: 30px;
+        text-decoration: none; font-family: Inter, sans-serif; font-size: 16px;
+        font-weight: 700; margin-bottom: 12px;'>
+        Create Account
+    </a>
+
+    <a href='/login' style='display: block; width: 100%; max-width: 300px;
+        background: transparent; color: #9B8EC4; padding: 14px; border-radius: 30px;
+        text-decoration: none; font-family: Inter, sans-serif; font-size: 16px;
+        font-weight: 700; margin-bottom: 20px;
+        border: 1px solid #9B8EC4;'>
+        Sign In
+    </a>
+
+    <a href='/' style='color: #6B6B8A; font-family: Inter, sans-serif; font-size: 14px;
+        text-decoration: none;'>
+        Continue without account
+    </a>
+
+</div>
+{% endblock %}
