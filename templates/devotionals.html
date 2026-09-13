@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Devotionals</h1>
 
-    <div style='background: linear-gradient(rgba(15, 8, 2, 0.65), rgba(20, 10, 3, 0.68)), url("{{ daily_image }}") center/cover no-repeat;
+    <div style='background: linear-gradient(rgba(15, 8, 2, 0.40), rgba(20, 10, 3, 0.45)), url("{{ daily_image }}") center/cover no-repeat;
         border-radius: 12px; padding: 20px; margin-bottom: 20px;'>
         <form method='GET' action='/devotionals'>
             <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
@@ -33,7 +33,7 @@
     {% if devotionals %}
         {% for devotional in devotionals %}
             <a href='/devotionals/{{ devotional.id }}' style='text-decoration: none;'>
-                <div style='background: linear-gradient(rgba(20, 15, 30, 0.80), rgba(25, 18, 35, 0.80)), url("{{ daily_image }}") center/cover no-repeat;
+                <div style='background: linear-gradient(rgba(20, 15, 30, 0.45), rgba(25, 18, 35, 0.50)), url("{{ daily_image }}") center/cover no-repeat;
                     border-radius: 10px; padding: 20px; margin-bottom: 12px;
                     border-left: 3px solid #C9A84C;
                     box-shadow: 0 2px 8px rgba(0,0,0,0.3);'>
@@ -67,5 +67,6 @@
         </div>
     {% endif %}
 {% endblock %}
+
 
 

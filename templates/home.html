@@ -1,6 +1,51 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
 {% block content %}
+{% if not current_user %}
+<div id='signin-prompt' style='display:none; position:fixed; bottom:0; left:0; right:0; z-index:1000;
+    background: linear-gradient(to top, #1A1A2E, #0F0F14);
+    border-top: 1px solid #2D2640; border-radius: 20px 20px 0 0;
+    padding: 30px 25px; text-align: center; box-shadow: 0 -4px 30px rgba(0,0,0,0.5);'>
+    <div style='width:40px; height:4px; background:#2D2640; border-radius:2px; margin:0 auto 20px;'></div>
+    <img src='/static/icons/icon-192.png' style='width:60px; height:60px; border-radius:14px; margin-bottom:15px;'>
+    <h2 style='color:white; font-family:Lora,Georgia,serif; font-size:20px; margin-bottom:8px; border:none; padding:0;'>
+        Get the full experience
+    </h2>
+    <p style='color:#B8A9D9; font-family:Inter,sans-serif; font-size:14px; margin-bottom:25px; line-height:1.6;'>
+        Sign in to save devotionals, track your reading progress, write personal notes, and receive daily reminders.
+    </p>
+    <a href='/signup' style='display:block; background:#C9A84C; color:#0F0F14; padding:13px;
+        border-radius:25px; text-decoration:none; font-family:Inter,sans-serif;
+        font-size:15px; font-weight:700; margin-bottom:10px;'>
+        Create Free Account
+    </a>
+    <a href='/login' style='display:block; background:transparent; color:#C9A84C; padding:13px;
+        border-radius:25px; text-decoration:none; font-family:Inter,sans-serif;
+        font-size:15px; font-weight:700; margin-bottom:15px;
+        border:1px solid #C9A84C;'>
+        Sign In
+    </a>
+    <button onclick='dismissPrompt()' style='background:none; border:none; color:#6B6B8A;
+        font-family:Inter,sans-serif; font-size:13px; cursor:pointer; padding:5px;'>
+        Continue without account
+    </button>
+</div>
+
+<script>
+function dismissPrompt() {
+    document.getElementById('signin-prompt').style.display = 'none';
+    sessionStorage.setItem('prompt-dismissed', 'true');
+}
+
+window.addEventListener('load', function() {
+    if (!sessionStorage.getItem('prompt-dismissed')) {
+        setTimeout(function() {
+            document.getElementById('signin-prompt').style.display = 'block';
+        }, 2000);
+    }
+});
+</script>
+{% endif %}
     <div class='hero'>
         <p class='greeting' id='greeting'></p>
         {% if current_user %}
@@ -28,7 +73,7 @@
 
         <h2 class='section-title'>Today's Devotional</h2>
         {% if devotional %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.25), rgba(25, 18, 35, 0.30)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.4);'>
                 <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
@@ -55,7 +100,7 @@
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.25), rgba(25, 18, 35, 0.30)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 25px; margin-bottom: 10px;'>
                 <p style='color: rgba(240,237,232,0.7); font-family: Inter, sans-serif;'>No devotional for today. Check back tomorrow.</p>
                 <a href='/devotionals' style='color: #C9A84C; font-weight: bold;'>Browse all devotionals</a>
@@ -67,7 +112,7 @@
             <a href='/devotionals' style='color: #C9A84C; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all</a>
         </div>
         {% if yesterday %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.25), rgba(25, 18, 35, 0.30)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 20px;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);'>
                 <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
@@ -92,7 +137,7 @@
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(rgba(20, 15, 30, 0.75), rgba(25, 18, 35, 0.75)), url("{{ daily_image }}") center/cover no-repeat;
+            <div style='background: linear-gradient(rgba(20, 15, 30, 0.25), rgba(25, 18, 35, 0.30)), url("{{ daily_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 20px;'>
                 <p style='color: rgba(240,237,232,0.6); font-family: Inter, sans-serif; font-size: 14px;'>
                     Previous devotionals will appear here.
@@ -182,4 +227,8 @@
         setGreeting();
     </script>
 {% endblock %}
+
+
+
+
 

@@ -1,5 +1,23 @@
-name = "Melvis"
+words = ["sanctification", "grace", "faith", "redemption", "joy", "love" ]
 
-def greet_user(name):
-    return f"Good morning, {name}! Keep growing in the word."
-print(greet_user(name))
+def filter_by_length(words, minimum):
+    result = []
+    for word in words:      
+        if len(word) > minimum:
+            result.append(word)
+    return result
+
+result = filter_by_length(words, 5)
+print(result)        
+
+def find_longest(words):
+    winner = words[0]
+    for word in words:
+        if len(word) > len(winner):
+            winner = word
+    return winner
+winner = find_longest(words)
+print(winner)      
+
+
+            
