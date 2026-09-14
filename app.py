@@ -40,7 +40,7 @@ DAILY_IMAGES = [
     "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
     "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
     "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=800&q=80",
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
+
     "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=800&q=80",
     "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
     "https://images.unsplash.com/photo-1464852045489-bccb7d17fe39?auto=format&fit=crop&w=800&q=80",
@@ -249,11 +249,13 @@ def home():
     latest_sermon = get_latest_sermon(sermons)
     word_of_the_day = get_word_of_the_day()
     current_user = get_current_user()
+    daily_image = get_daily_image()
     return render_template('home.html',
         devotional=todays_devotional,
         yesterday=yesterdays_devotional,
         latest_sermon=latest_sermon,
         word_of_the_day=word_of_the_day,
+        daily_image=daily_image,
         current_user=current_user)
 
 @app.route('/devotionals')
@@ -287,8 +289,9 @@ def devotional_detail(devotional_id):
         favourited = False
         if current_user:
             favourited = is_favourited(current_user['id'], 'devotional', devotional_id)
+        daily_image = get_daily_image()
         return render_template('devotional_detail.html', devotional=devotional,
-            current_user=current_user, favourited=favourited)
+            current_user=current_user, favourited=favourited, daily_image=daily_image)
     else:
         return 'Devotional not found', 404
 
@@ -691,6 +694,14 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+
+
+
+
+
+
 
 
 
