@@ -137,7 +137,7 @@ window.addEventListener('load', function() {
                 </a>
             </div>
         {% else %}
-            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ daily_image }}") center/cover no-repeat;
+            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ yesterday_image }}") center/cover no-repeat;
                 border-radius: 12px; padding: 20px;'>
                 <p style='color: rgba(240,237,232,0.6); font-family: Inter, sans-serif; font-size: 14px;'>
                     Previous devotionals will appear here.
@@ -227,6 +227,8 @@ window.addEventListener('load', function() {
         setGreeting();
     </script>
 {% endblock %}
+
+
 
 
 
