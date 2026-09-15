@@ -52,13 +52,13 @@ DAILY_IMAGES = [
     "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?auto=format&fit=crop&w=800&q=80",
 ]
 
-def get_daily_image():
+def get_daily_image(offset=0):
     today = datetime.date.today()
     launch = datetime.date(2026, 8, 1)
     if today < launch:
-        return DAILY_IMAGES[0]
+        return DAILY_IMAGES[offset % len(DAILY_IMAGES)]
     day = today.timetuple().tm_yday
-    return DAILY_IMAGES[day % len(DAILY_IMAGES)]
+    return DAILY_IMAGES[(day + offset) % len(DAILY_IMAGES)]
 
 WORD_OF_THE_DAY = [
     {"verse": "John 3:16", "text": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."},
@@ -249,9 +249,9 @@ def home():
     latest_sermon = get_latest_sermon(sermons)
     word_of_the_day = get_word_of_the_day()
     current_user = get_current_user()
-    daily_image = get_daily_image()
-    day = __import__('datetime').date.today().timetuple().tm_yday
-    yesterday_image = DAILY_IMAGES[(day + 1) % len(DAILY_IMAGES)]
+    daily_image = get_daily_image(0)
+    yesterday_image = get_daily_image(1)
+    hero_image = get_daily_image(2)
     return render_template('home.html',
         devotional=todays_devotional,
         yesterday=yesterdays_devotional,
@@ -259,6 +259,7 @@ def home():
         word_of_the_day=word_of_the_day,
         daily_image=daily_image,
         yesterday_image=yesterday_image,
+        hero_image=hero_image,
         current_user=current_user)
 
 @app.route('/devotionals')
@@ -697,6 +698,9 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
+
 
 
 
