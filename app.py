@@ -250,12 +250,15 @@ def home():
     word_of_the_day = get_word_of_the_day()
     current_user = get_current_user()
     daily_image = get_daily_image()
+    day = __import__('datetime').date.today().timetuple().tm_yday
+    yesterday_image = DAILY_IMAGES[(day + 1) % len(DAILY_IMAGES)]
     return render_template('home.html',
         devotional=todays_devotional,
         yesterday=yesterdays_devotional,
         latest_sermon=latest_sermon,
         word_of_the_day=word_of_the_day,
         daily_image=daily_image,
+        yesterday_image=yesterday_image,
         current_user=current_user)
 
 @app.route('/devotionals')
@@ -694,6 +697,8 @@ def service_worker():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
+
 
 
 
