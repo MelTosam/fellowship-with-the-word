@@ -34,11 +34,11 @@
 <script>
 function dismissPrompt() {
     document.getElementById('signin-prompt').style.display = 'none';
-    sessionStorage.setItem('prompt-dismissed', 'true');
+    localStorage.setItem('prompt-dismissed', 'true');
 }
 
 window.addEventListener('load', function() {
-    if (!sessionStorage.getItem('prompt-dismissed')) {
+    if (!localStorage.getItem('prompt-dismissed')) {
         setTimeout(function() {
             document.getElementById('signin-prompt').style.display = 'block';
         }, 2000);
@@ -227,6 +227,7 @@ window.addEventListener('load', function() {
         setGreeting();
     </script>
 {% endblock %}
+
 
 
 
