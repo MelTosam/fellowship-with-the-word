@@ -1,250 +1,90 @@
 ﻿{% extends 'base.html' %}
 
 {% block content %}
-{% if not current_user %}
-<div id='signin-prompt' style='display:none; position:fixed; bottom:0; left:0; right:0; z-index:1000;
-    background: linear-gradient(to top, #1A1A2E, #0F0F14);
-    border-top: 1px solid #2D2640; border-radius: 20px 20px 0 0;
-    padding: 30px 25px; text-align: center; box-shadow: 0 -4px 30px rgba(0,0,0,0.5);'>
-    <div style='width:40px; height:4px; background:#2D2640; border-radius:2px; margin:0 auto 20px;'></div>
-    <img src='/static/icons/icon-192.png' style='width:60px; height:60px; border-radius:14px; margin-bottom:15px;'>
-    <h2 style='color:white; font-family:Lora,Georgia,serif; font-size:20px; margin-bottom:8px; border:none; padding:0;'>
-        Get the full experience
-    </h2>
-    <p style='color:#B8A9D9; font-family:Inter,sans-serif; font-size:14px; margin-bottom:25px; line-height:1.6;'>
-        Sign in to save devotionals, track your reading progress, write personal notes, and receive daily reminders.
-    </p>
-    <a href='/signup' style='display:block; background:#C9A84C; color:#0F0F14; padding:13px;
-        border-radius:25px; text-decoration:none; font-family:Inter,sans-serif;
-        font-size:15px; font-weight:700; margin-bottom:10px;'>
-        Create Free Account
-    </a>
-    <a href='/login' style='display:block; background:transparent; color:#C9A84C; padding:13px;
-        border-radius:25px; text-decoration:none; font-family:Inter,sans-serif;
-        font-size:15px; font-weight:700; margin-bottom:15px;
-        border:1px solid #C9A84C;'>
-        Sign In
-    </a>
-    <button onclick='dismissPrompt()' style='background:none; border:none; color:#6B6B8A;
-        font-family:Inter,sans-serif; font-size:13px; cursor:pointer; padding:5px;'>
-        Continue without account
-    </button>
-</div>
 
-<script>
-function dismissPrompt() {
-    document.getElementById('signin-prompt').style.display = 'none';
-    localStorage.setItem('prompt-dismissed', 'true');
-}
+{% if devotional %}
+    <a href='/devotionals' style='color: #C9A84C; font-family: Inter, sans-serif;
+        font-size: 14px; display: block; margin-bottom: 15px;'>← Back to Devotionals</a>
 
-window.addEventListener('load', function() {
-    if (!localStorage.getItem('prompt-dismissed')) {
-        setTimeout(function() {
-            document.getElementById('signin-prompt').style.display = 'block';
-        }, 2000);
-    }
-});
-</script>
+    <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.75) 100%),
+        url("{{ daily_image }}") center/cover no-repeat;
+        border-radius: 12px; padding: 25px; margin-bottom: 20px; min-height: 220px;
+        display: flex; flex-direction: column; justify-content: flex-end;'>
+        <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; font-family: Inter, sans-serif;
+            font-weight: 700; margin-bottom: 8px;'>
+            Fellowship With The Word
+        </p>
+        <h1 style='color: white; font-family: Lora, Georgia, serif;
+            font-size: 24px; margin-bottom: 8px; border: none; padding: 0;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);'>
+            {{ devotional.title }}
+        </h1>
+        <p style='color: white; font-style: italic; font-family: Lora, Georgia, serif;
+            font-size: 15px; font-weight: 600;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9);'>
+            {{ devotional.verse }}
+        </p>
+        <p style='color: #C9A84C; font-size: 12px; font-family: Inter, sans-serif;
+            margin-top: 8px;'>{{ devotional.date }}</p>
+
+        <div style='display: flex; gap: 10px; margin-top: 15px; align-items: center;'>
+            <form action='/favourite/devotional/{{ devotional.id }}' method='POST' style='display:inline;'>
+                <button type='submit'
+                    style='background: {% if favourited %}#C9A84C{% else %}transparent{% endif %};
+                    color: {% if favourited %}#0F0F14{% else %}#C9A84C{% endif %};
+                    border: 1px solid #C9A84C; padding: 7px 16px;
+                    border-radius: 20px; font-family: Inter, sans-serif;
+                    font-size: 13px; cursor: pointer;'>
+                    {% if favourited %}♥ Saved{% else %}♡ Save{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.65) 100%),
+        url("{{ daily_image }}") center/cover no-repeat;
+        border-radius: 12px; padding: 25px; margin-bottom: 20px;'>
+        <p style='white-space: pre-wrap; line-height: 2; font-size: 17px;
+            font-family: Lora, Georgia, serif; color: white; font-weight: 700;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.7);'>
+            {{ devotional.explanation }}
+        </p>
+    </div>
+
+    <div style='text-align: center; margin-top: 20px;'>
+        <a href='https://wa.me/?text=Fellowship%20With%20The%20Word%20-%20{{ devotional.title | urlencode }}%0A{{ request.url }}'
+            target='_blank'
+            style='display: inline-block; background: #25D366; color: white;
+            padding: 10px 20px; border-radius: 25px; text-decoration: none;
+            font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; margin: 5px;'>
+            Share on WhatsApp
+        </a>
+    </div>
+
+    {% if current_user %}
+    <div style='text-align: center; margin-top: 25px;'>
+        <a href='/notes/{{ devotional.id }}'
+            style='display: inline-block; background: #2D2640; color: #B8A9D9;
+            padding: 12px 30px; border-radius: 25px; text-decoration: none;
+            font-family: Inter, sans-serif; font-size: 14px; font-weight: 600;
+            border: 1px solid #3D3555; margin-bottom: 15px;'>
+            My Notes
+        </a>
+    </div>
+    {% endif %}
+
+    <div style='text-align: center; margin-top: 20px;'>
+        <a href='/devotionals'
+            style='color: #C9A84C; font-weight: bold; text-decoration: none;
+            font-family: Inter, sans-serif; font-size: 14px;
+            border: 1px solid #C9A84C; padding: 10px 25px; border-radius: 25px;'>
+            ← Back to all devotionals
+        </a>
+    </div>
+
+{% else %}
+    <p style='color: white;'>Devotional not found.</p>
 {% endif %}
-    <div class='hero' style='background: linear-gradient(to bottom, rgba(10,8,18,0.55) 0%, rgba(10,8,18,0.80) 100%), url("{{ hero_image }}") center/cover no-repeat; text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.7);'>
-        <p class='greeting' id='greeting'></p>
-        {% if current_user %}
-        <p style='color: white; font-size: 14px; font-family: Lora, Georgia, serif;
-            font-style: italic; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);'>
-            Welcome back, {{ current_user.name }}
-        </p>
-        {% endif %}
-        <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
-            text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 10px;'>
-            Word of the Day
-        </p>
-        <p style='color: white; font-family: Lora, Georgia, serif;
-            font-size: 16px; line-height: 1.8; font-style: italic; margin-bottom: 8px;'>
-            "{{ word_of_the_day.text }}"
-        </p>
-        <p style='color: #C9A84C; font-family: Inter, sans-serif;
-            font-size: 13px; font-weight: 600; margin-bottom: 20px;'>
-            -- {{ word_of_the_day.verse }}
-        </p>
-        <p class='hero-tagline'>Are you ready for today's devotional?</p>
-    </div>
 
-    <div class='today-section'>
-
-        <h2 class='section-title'>Today's Devotional</h2>
-        {% if devotional %}
-            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ daily_image }}") center/cover no-repeat;
-                border-radius: 12px; padding: 25px; margin-bottom: 10px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.4);'>
-                <p style='color: #C9A84C; font-size: 11px; letter-spacing: 2px;
-                    text-transform: uppercase; font-family: Inter, sans-serif;
-                    font-weight: 700; margin-bottom: 8px;'>
-                    Fellowship With The Word
-                </p>
-                <h2 style='color: white; font-family: Lora, Georgia, serif;
-                    font-size: 20px; margin-bottom: 8px; line-height: 1.4;'>
-                    {{ devotional.title }}
-                </h2>
-                <p style='color: white; font-style: italic; font-family: Lora, Georgia, serif; font-weight: 600;
-                    font-size: 14px; margin-bottom: 12px;'>{{ devotional.verse }}</p>
-                <p style='color: white; font-weight: 600; font-size: 14px; line-height: 1.8;
-                    font-family: Inter, sans-serif; margin-bottom: 15px;'>
-                    {{ devotional.explanation[:200] }}...
-                </p>
-                <a href='/devotionals/{{ devotional.id }}'
-                    style='color: #C9A84C; font-weight: bold; text-decoration: none;
-                    font-family: Inter, sans-serif; font-size: 14px;
-                    border: 1px solid #C9A84C; padding: 8px 16px;
-                    border-radius: 20px;'>
-                    Read full devotional
-                </a>
-            </div>
-        {% else %}
-            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ daily_image }}") center/cover no-repeat;
-                border-radius: 12px; padding: 25px; margin-bottom: 10px;'>
-                <p style='color: rgba(240,237,232,0.7); font-family: Inter, sans-serif;'>No devotional for today. Check back tomorrow.</p>
-                <a href='/devotionals' style='color: #C9A84C; font-weight: bold;'>Browse all devotionals</a>
-            </div>
-        {% endif %}
-
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
-            <h2 class='section-title' style='margin: 0;'>Devotionals</h2>
-            <a href='/devotionals' style='color: #C9A84C; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all</a>
-        </div>
-        {% if yesterday %}
-            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ daily_image }}") center/cover no-repeat;
-                border-radius: 12px; padding: 20px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);'>
-                <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
-                    text-transform: uppercase; font-family: Inter, sans-serif;
-                    font-weight: 700; margin-bottom: 6px;'>
-                    Previous Devotional
-                </p>
-                <h2 style='color: white; font-family: Lora, Georgia, serif;
-                    font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
-                    {{ yesterday.title }}
-                </h2>
-                <p style='color: white; font-style: italic; font-size: 13px; font-weight: 600;
-                    font-family: Lora, Georgia, serif; margin-bottom: 10px; color: white; font-weight: 600;'>{{ yesterday.verse }}</p>
-                <p style='color: white; font-weight: 600; font-size: 13px; line-height: 1.7;
-                    font-family: Inter, sans-serif; margin-bottom: 12px;'>
-                    {{ yesterday.explanation[:120] }}...
-                </p>
-                <a href='/devotionals/{{ yesterday.id }}'
-                    style='color: #C9A84C; font-weight: bold; text-decoration: none;
-                    font-family: Inter, sans-serif; font-size: 13px;'>
-                    Read more
-                </a>
-            </div>
-        {% else %}
-            <div style='background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.75) 100%), url("{{ yesterday_image }}") center/cover no-repeat;
-                border-radius: 12px; padding: 20px;'>
-                <p style='color: rgba(240,237,232,0.6); font-family: Inter, sans-serif; font-size: 14px;'>
-                    Previous devotionals will appear here.
-                </p>
-            </div>
-        {% endif %}
-
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
-            <h2 class='section-title' style='margin: 0;'>Sermons</h2>
-            <a href='/sermons' style='color: #C9A84C; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>View all</a>
-        </div>
-        {% if latest_sermon %}
-            <div style='background: linear-gradient(rgba(25, 15, 40, 0.75), rgba(35, 65, 45, 0.75)), url("https://images.unsplash.com/photo-1695489790272-8f108558e69c?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
-                border-radius: 12px; padding: 20px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.4);'>
-                <p style='color: #9B8EC4; font-size: 10px; letter-spacing: 2px;
-                    text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
-                    Fellowship With The Word
-                </p>
-                <h2 style='color: white; font-family: Lora, Georgia, serif;
-                    font-size: 17px; margin-bottom: 6px; line-height: 1.4;'>
-                    {{ latest_sermon.title }}
-                </h2>
-                <p style='color: #B8A9D9; font-size: 12px; margin-bottom: 10px;
-                    font-family: Inter, sans-serif;'>{{ latest_sermon.date }}</p>
-                <p style='color: white; font-weight: 600; font-size: 13px; line-height: 1.7;
-                    font-family: Inter, sans-serif; margin-bottom: 12px;'>
-                    {{ latest_sermon.description[:120] }}...
-                </p>
-                <a href='/sermons/{{ latest_sermon.id }}'
-                    style='color: #9B8EC4; font-weight: bold; text-decoration: none;
-                    font-family: Inter, sans-serif; font-size: 13px;'>
-                    Watch sermon
-                </a>
-            </div>
-        {% else %}
-            <div style='background: linear-gradient(rgba(25, 15, 40, 0.75), rgba(35, 65, 45, 0.75)), url("https://images.unsplash.com/photo-1695489790272-8f108558e69c?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
-                border-radius: 12px; padding: 20px;'>
-                <p style='color: rgba(240,237,232,0.6); font-family: Inter, sans-serif; font-size: 14px;'>
-                    Sermons coming soon.
-                </p>
-            </div>
-        {% endif %}
-
-        <div style='display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 10px;'>
-            <h2 class='section-title' style='margin: 0;'>Bible</h2>
-            <a href='/bible' style='color: #C9A84C; font-size: 13px; text-decoration: none; font-family: Inter, sans-serif;'>Open Bible</a>
-        </div>
-        <div style='background: linear-gradient(rgba(6, 14, 28, 0.75), rgba(16, 40, 65, 0.75)), url("https://images.unsplash.com/photo-1634110447984-a707ccb8f41a?auto=format&fit=crop&w=800&q=80") center/cover no-repeat;
-            border-radius: 12px; padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);'>
-            <p style='color: #C9A84C; font-size: 10px; letter-spacing: 2px;
-                text-transform: uppercase; font-family: Inter, sans-serif; margin-bottom: 6px;'>
-                The Holy Scriptures
-            </p>
-            <h2 style='color: white; font-family: Lora, Georgia, serif;
-                font-size: 17px; margin-bottom: 8px; line-height: 1.4;'>
-                Search the Word of God
-            </h2>
-            <p style='color: rgba(184, 200, 216, 0.85); font-style: italic; font-family: Lora, Georgia, serif;
-                font-size: 13px; margin-bottom: 12px;'>
-                Your word is a lamp to my feet and a light to my path - Psalm 119:105
-            </p>
-            <a href='/bible'
-                style='color: #C9A84C; font-weight: bold; text-decoration: none;
-                font-family: Inter, sans-serif; font-size: 13px;
-                border: 1px solid #C9A84C; padding: 8px 16px; border-radius: 20px;'>
-                Open Bible
-            </a>
-        </div>
-
-    </div>
-
-    <script>
-        function setGreeting() {
-            var hour = new Date().getHours();
-            var greeting = '';
-            if (hour < 12) {
-                greeting = 'Good morning';
-            } else if (hour < 17) {
-                greeting = 'Good afternoon';
-            } else {
-                greeting = 'Good evening';
-            }
-            document.getElementById('greeting').textContent = greeting;
-        }
-        setGreeting();
-    </script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
