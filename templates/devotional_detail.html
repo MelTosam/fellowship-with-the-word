@@ -53,14 +53,56 @@
     </div>
 
     <div style='text-align: center; margin-top: 20px;'>
-        <a href='https://wa.me/?text=Fellowship%20With%20The%20Word%20-%20{{ devotional.title | urlencode }}%0A{{ request.url }}'
-            target='_blank'
-            style='display: inline-block; background: #25D366; color: white;
-            padding: 10px 20px; border-radius: 25px; text-decoration: none;
-            font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; margin: 5px;'>
-            Share on WhatsApp
-        </a>
+        <button onclick='shareDevotional()'
+            style='display: inline-block; background: #C9A84C; color: #0F0F14;
+            padding: 12px 28px; border-radius: 25px; border: none;
+            font-family: Inter, sans-serif; font-size: 14px; font-weight: 700;
+            cursor: pointer; margin: 5px;'>
+            Share
+        </button>
     </div>
+    <canvas id='share-canvas' style='display:none;'></canvas>
+    <script>
+    async function shareDevotional() {
+        var title = {{ devotional.title | tojson }};
+        var verse = {{ devotional.verse | tojson }};
+        var url = window.location.href;
+        var canvas = document.getElementById('share-canvas');
+        canvas.width = 1080; canvas.height = 1080;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#0F0F14'; ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = '#C9A84C'; ctx.fillRect(0, 0, 1080, 8);
+        ctx.fillStyle = '#C9A84C'; ctx.font = '28px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.fillText('FELLOWSHIP WITH THE WORD', 540, 100);
+        ctx.fillStyle = '#C9A84C'; ctx.font = 'bold 100px Georgia, serif';
+        ctx.fillText('“', 540, 300);
+        ctx.fillStyle = '#FFFFFF'; ctx.font = 'italic 38px Georgia, serif';
+        var words = verse.split(' '); var line = ''; var y = 380;
+        var lines = [];
+        for (var i = 0; i < words.length; i++) {
+            var test = line + words[i] + ' ';
+            if (ctx.measureText(test).width > 880 && line !== '') { lines.push(line.trim()); line = words[i] + ' '; }
+            else { line = test; }
+        }
+        lines.push(line.trim());
+        for (var j = 0; j < lines.length; j++) { ctx.fillText(lines[j], 540, y + (j * 58)); }
+        ctx.fillStyle = '#9B8EC4'; ctx.font = '26px Inter, sans-serif';
+        ctx.fillText(title, 540, 920);
+        ctx.fillStyle = 'rgba(240,237,232,0.5)'; ctx.font = '22px Inter, sans-serif';
+        ctx.fillText('fellowshipwiththeword.org', 540, 965);
+        canvas.toBlob(async function(blob) {
+            var file = new File([blob], 'devotional.png', { type: 'image/png' });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                try { await navigator.share({ files: [file], title: 'Fellowship With The Word', text: verse + '
+
+' + url }); } catch(e) {}
+            } else if (navigator.share) { navigator.share({ title: title, text: verse, url: url }); }
+            else { window.open('https://wa.me/?text=' + encodeURIComponent(verse + '
+
+' + url), '_blank'); }
+        }, 'image/png');
+    }
+    </script>
 
     {% if current_user %}
     <div style='text-align: center; margin-top: 25px;'>
