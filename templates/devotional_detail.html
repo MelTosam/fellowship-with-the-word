@@ -72,11 +72,33 @@
             window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
             return;
         }
+        var canvas = document.getElementById('share-canvas');
+        canvas.width = 1080; canvas.height = 1080;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#0F0F14'; ctx.fillRect(0, 0, 1080, 1080);
+        ctx.fillStyle = '#C9A84C'; ctx.fillRect(0, 0, 1080, 8);
+        ctx.fillStyle = '#C9A84C'; ctx.fillRect(0, 1072, 1080, 8);
+        ctx.fillStyle = '#C9A84C'; ctx.font = '700 30px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.fillText('FELLOWSHIP WITH THE WORD', 540, 90);
+        ctx.fillStyle = '#C9A84C'; ctx.font = '120px Georgia, serif';
+        ctx.fillText('“', 540, 320);
+        ctx.fillStyle = '#FFFFFF'; ctx.font = 'italic 40px Georgia, serif';
+        var words = verse.split(' '); var line = ''; var y = 400; var lines = [];
+        for (var i = 0; i < words.length; i++) {
+            var test = line + words[i] + ' ';
+            if (ctx.measureText(test).width > 880 && line !== '') { lines.push(line.trim()); line = words[i] + ' '; }
+            else { line = test; }
+        }
+        lines.push(line.trim());
+        var startY = y - ((lines.length - 1) * 60) / 2;
+        for (var j = 0; j < lines.length; j++) { ctx.fillText(lines[j], 540, startY + (j * 60)); }
+        ctx.fillStyle = '#C9A84C'; ctx.font = '700 28px Inter, sans-serif';
+        ctx.fillText('— ' + title, 540, 900);
+        ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.font = '24px Inter, sans-serif';
+        ctx.fillText('fellowshipwiththeword.org', 540, 960);
         try {
-            var imgUrl = {{ daily_image | tojson }};
-            var response = await fetch(imgUrl);
-            var blob = await response.blob();
-            var file = new File([blob], 'devotional.jpg', { type: blob.type });
+            var blob = await new Promise(function(resolve) { canvas.toBlob(resolve, 'image/png'); });
+            var file = new File([blob], 'devotional.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({ files: [file], title: title, text: shareText });
                 return;
