@@ -67,6 +67,10 @@
         var title = {{ devotional.title | tojson }};
         var verse = {{ devotional.verse | tojson }};
         var url = window.location.href;
+        if (!navigator.share) {
+            window.open('https://wa.me/?text=' + encodeURIComponent(verse + '\n\n' + url), '_blank');
+            return;
+        }
         var canvas = document.getElementById('share-canvas');
         canvas.width = 1080; canvas.height = 1080;
         var ctx = canvas.getContext('2d');
@@ -90,17 +94,15 @@
         ctx.fillText(title, 540, 920);
         ctx.fillStyle = 'rgba(240,237,232,0.5)'; ctx.font = '22px Inter, sans-serif';
         ctx.fillText('fellowshipwiththeword.org', 540, 965);
-        canvas.toBlob(async function(blob) {
+        try {
+            var blob = await new Promise(function(resolve) { canvas.toBlob(resolve, 'image/png'); });
             var file = new File([blob], 'devotional.png', { type: 'image/png' });
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                try { await navigator.share({ files: [file], title: 'Fellowship With The Word', text: verse + '
-
-' + url }); } catch(e) {}
-            } else if (navigator.share) { navigator.share({ title: title, text: verse, url: url }); }
-            else { window.open('https://wa.me/?text=' + encodeURIComponent(verse + '
-
-' + url), '_blank'); }
-        }, 'image/png');
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file], title: 'Fellowship With The Word', text: verse + '\n\n' + url });
+                return;
+            }
+        } catch(e) {}
+        try { await navigator.share({ title: title, text: verse + '\n\n' + url, url: url }); } catch(e) {}
     }
     </script>
 
