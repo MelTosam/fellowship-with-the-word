@@ -67,7 +67,7 @@
         var title = {{ devotional.title | tojson }};
         var verse = {{ devotional.verse | tojson }};
         var url = window.location.href;
-        var shareText = verse + '\n\nRead more: ' + url;
+        var shareText = 'Read today\'s devotional: ' + url;
         if (!navigator.share) {
             window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
             return;
